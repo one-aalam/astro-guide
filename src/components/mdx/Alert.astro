@@ -1,0 +1,39 @@
+---
+import Frame, { type FrameColor } from './Frame.astro';
+import { Icon } from 'astro-icon/components';
+type Props = {
+    color?: FrameColor,
+    dismissible?: boolean,
+    class?: string
+}
+
+const defaultClass = `p-4 gap-3 text-sm`
+---
+<astro-alert>
+<Frame color={Astro.props.color} role="alert" rounded={true} border={true} class:list={[
+    defaultClass, 
+    Astro.props.class, 
+    Astro.slots.has('icon') || Astro.props.dismissible ? 'flex items-center' : '',
+    ]}>
+    {Astro.slots.has('icon') && <slot name="icon" />}
+    {Astro.slots.has('icon') || Astro.props.dismissible ? <div><slot /></div> : <slot />}
+    { Astro.props.dismissible && <button class="w-4 h-4"><slot name="dismiss"><Icon name={'x-circle'}/></slot></button>}
+<Frame/>
+</astro-alert>
+<script>
+  // Define the behaviour for our new type of HTML element.
+  class AstroAlert extends HTMLElement {
+    constructor() {
+      super();
+
+      const dismissBtn = this.querySelector('button');
+      const self: HTMLElement = this;
+
+      dismissBtn?.addEventListener('click', (e: Event) => {
+        self.remove();
+      });
+    }
+  }
+
+  customElements.define('astro-alert', AstroAlert);
+</script>

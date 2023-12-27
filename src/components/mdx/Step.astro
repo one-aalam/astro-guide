@@ -1,0 +1,15 @@
+---
+type Props = {
+  number: number;
+  title: string;
+  size?: 'default' | 'small';
+}
+
+const { number, title, size = 'default' } = Astro.props;
+---
+<div class="step flex items-center py-4">
+  <div class={`flex items-center justify-center bg-green-200 text-green-700 dark:bg-green-900 dark:text-green-200 shadow-inner font-bold mr-3 rounded-full ${size === 'small' ? 'w-8 h-8' : 'w-12 h-12'}`} data-testid="step">
+    {number}
+  </div>
+  <h3 class="m-0 tracking-tight font-bold" style={{margin: 0}}>{title}</h3>
+</div>

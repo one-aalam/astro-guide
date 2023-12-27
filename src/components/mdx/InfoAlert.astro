@@ -1,0 +1,25 @@
+---
+import Alert from './Alert.astro';
+import { type FrameColor } from './Frame.astro';
+import { Icon } from 'astro-icon/components';
+
+type Props = {
+    color?: FrameColor,
+    class?: string,
+    heading?: string
+}
+
+---
+<Alert color={Astro.props.color} class={Astro.props.class}>
+  <div class="flex items-center gap-3">
+    <Icon slot="icon" class="w-4 h-4" name={'x-circle'}/>
+    <span class="text-lg font-medium">{Astro.props.heading || ''}</span>
+  </div>
+  <p class="mt-2 mb-4 text-sm">
+    <slot/>
+  </p>
+  <div class="flex gap-2">
+    <!-- <Button size="xs"><EyeSolid class="w-4 h-4 me-2" />View more</Button>
+    <Button size="xs" outline class="dark:!text-primary-800">Go to Home</Button> -->
+  </div>
+</Alert>

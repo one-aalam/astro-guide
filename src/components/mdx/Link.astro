@@ -1,0 +1,21 @@
+---
+type Props = LinkProps
+
+export type LinkProps = {
+  href: string;
+  title?: string;
+  class?: string;
+  style?: Record<string, string|number>;
+  rel?: string;
+}
+
+const { href, title = '', class: className, style = '', rel = 'noopener noreferrer' } = Astro.props;
+const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
+---
+{
+  isInternalLink ? (
+    <a href={href} class={className} style={style} title={title}><slot/></a>
+  ) : (
+    <a href={href} class={className} style={style} title={title} target="_blank" rel={rel}><slot/></a>
+  )
+}

@@ -1,0 +1,24 @@
+---
+import type { DirectoryNode, FileNode } from './types'
+import NonLeafNode from './NonLeafNode.astro';
+
+type Props = {
+    nodes: TreeNode[];
+    class?: string;
+};
+
+type TreeNode = FileNode | DirectoryNode;
+
+---
+<div
+    class:list={[
+        "not-prose flex flex-col overflow-x-scroll rounded-md border-2 border-base-300 p-5 shadow-md dark:border-base-700",
+        Astro.props.class
+    ]}
+>
+    <ul class="flex min-w-[460px] flex-col">
+        {Astro.props.nodes.map((n) => (
+            <NonLeafNode node={n} depth={0} />
+        ))}
+    </ul>
+</div>

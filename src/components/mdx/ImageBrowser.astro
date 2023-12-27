@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+
+type Props = {
+  src: string;
+  url?: string;
+  alt?: string;
+}
+
+const { src, url = '', alt = '' } = Astro.props;
+---
+<div class="rounded-lg bg-green-200 dark:bg-green-900 shadow-lg overflow-hidden my-4">
+  <div class="h-10 bg-green-200 dark:bg-green-900 p-3 flex gap-20">
+    <div class="flex px-2 gap-2">
+      <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+      <div class="w-4 h-4 bg-red-300 rounded-full"></div>
+      <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+    </div>
+    { url.length > 0 && <input class="h-6 pl-2 text-xs text-green-700 -m-1 w-96 rounded-sm bg-green-300" value={url} />}
+  </div>
+  <Image src={src} width="960" height="540" alt={alt} />
+</div>;

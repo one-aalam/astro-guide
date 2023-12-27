@@ -1,0 +1,17 @@
+---
+import Avatar from "../Avatar.astro";
+
+type Props = {
+    name: string;
+    avatar?: {
+        src: string;
+        alt: string;
+    };
+};
+
+const { name, avatar } = Astro.props;
+---
+<div class="flex items-center gap-2">
+    {avatar ? <Avatar src={avatar.src} alt={avatar.alt} size={32} class="h-8 w-8" /> : ''}
+    <p>{name}</p>
+</div>

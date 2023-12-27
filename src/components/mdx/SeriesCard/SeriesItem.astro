@@ -1,0 +1,31 @@
+---
+
+type Props = {
+  item: SeriesItem,
+  current: SeriesItem
+}
+
+export type SeriesItem = {
+    title: string,
+    slug: string,
+    seriesOrdinal: number,
+    isActive?: boolean,
+    published?: boolean,
+    isDroppingOn?: string
+}
+
+
+const { item, current } = Astro.props;
+
+---
+<div class="step flex items-center mt-3">
+  <div class="font-display flex items-center justify-center bg-gray-200 text-green-800 dark:bg-gray-700 dark:text-green-200 shadow-inset font-bold  rounded-full h-7 w-7 mr-2">
+    {item.seriesOrdinal}
+  </div>
+  {(item.slug !== current.slug && item.published) ? <a href={`/blog/${item.slug}`}>
+    <a class="px-1 hover:text-green-700 dark:hover:text-green-300 hover:bg-green-50 dark:hover:bg-gray-700" title={item.title}>{item.title}</a>
+  </a> :
+  <h3 class={`m-0 px-1 ${!item.published && 'text-gray-500'} ${item.slug === current.slug && 'border-b-2 border-gray-300 dark:border-gray-500'}`} style={{margin: 0}}>{item.title}{
+      !item.published && ` (${item.isDroppingOn ? item.isDroppingOn : 'Coming Soon'})`
+  }</h3> }
+</div>

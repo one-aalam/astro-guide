@@ -1,0 +1,12 @@
+---
+import Link, { type LinkProps } from "./Link.astro";
+
+type Props = LinkProps;
+const { href, title = '', class: className, rel = 'noopener noreferrer' } = Astro.props;
+---
+<Link href={href} title={title} class:list={[
+    "hover:[&>*]:stroke-[3px] border-b-2 pb-0.5 border-b-transparent hover:border-b-primary-500 dark:hover:border-b-primary-400",
+    className
+    ]}  rel={rel}>
+    <slot />
+</Link>

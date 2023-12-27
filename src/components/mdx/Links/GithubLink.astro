@@ -1,0 +1,11 @@
+---
+import { Icon } from 'astro-icon/components'
+import IconLink from '../IconLink.astro'
+
+type Props = {
+    class?: string
+}
+---
+<IconLink title="GitHub" href="https://github.com/one-aalam/astro-ink" class={Astro.props.class}>
+    <Icon name={'github'} class="w-6 h-6" />
+</IconLink>

@@ -1,0 +1,11 @@
+---
+import { Icon } from 'astro-icon/components'
+import IconLink from '../IconLink.astro'
+
+type Props = {
+    class?: string
+}
+---
+<IconLink title="RSS Feed" href="/rss.xml" class={Astro.props.class}>
+    <Icon name={'rss'} class="w-6 h-6" />
+</IconLink>

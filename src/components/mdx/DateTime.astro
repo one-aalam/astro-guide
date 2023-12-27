@@ -1,0 +1,15 @@
+---
+import { format, parseISO } from "date-fns";
+
+type Props = {
+    value: string;
+    title?: string;
+    class?: string;
+};
+
+const { value, title = '', class: className } = Astro.props;
+
+---
+<time title={title} class={className} datetime={value}>
+    {format(parseISO(value), "yyyy-MM-dd")}
+</time>

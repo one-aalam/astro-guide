@@ -1,0 +1,28 @@
+---
+import SeriesI, { type SeriesItem } from './SeriesItem.astro';
+
+type Props = {
+  title: string,
+  desc: string,
+  fullyReleased?: boolean,
+  sections: SeriesSection[],
+  current: SeriesItem
+}
+
+type SeriesSection = {
+  title: string,
+  desc: string,
+  items: SeriesItem[]
+}
+
+
+const { title, desc, fullyReleased, sections, current } = Astro.props;
+
+---
+<div class="w-full bg-gray-100 text-gray-800 dark:bg-gray-800 rounded-lg dark:text-white mt-4 px-5 py-4">
+  <h3>You're on part {current?.seriesOrdinal} of the {sections[0].items?.length}-part series <strong>{title}</strong> where {desc}</h3>
+  {
+    sections[0].items?.map(item => <SeriesI item={item} current={current}  />)
+  }
+</div>
+

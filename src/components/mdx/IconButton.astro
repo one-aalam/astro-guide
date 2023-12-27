@@ -1,0 +1,14 @@
+---
+type Props = {
+    title?: string;
+    class?: string;
+};
+
+const { title = '', class: className } = Astro.props;
+---
+<button title={title} class:list={[
+    "hover:[&>*]:stroke-[3px] border-b-2 pb-0.5 border-b-transparent hover:border-b-primary-500 dark:hover:border-b-primary-400",
+    className
+    ]}>
+    <slot />
+</button>

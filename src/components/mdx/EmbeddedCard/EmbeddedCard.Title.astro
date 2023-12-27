@@ -1,0 +1,23 @@
+---
+import {Icon} from 'astro-icon/components';
+
+type Props = {
+    icon?: {
+        name: string;
+        class?: string;
+    }
+};
+
+---
+<div class="flex justify-between">
+    <slot/>
+    <Icon
+        class:list={[
+            "flex-shrink-0 stroke-2 group-hover:stroke-[3px]",
+            "text-base-400 dark:text-base-500",
+            "group-hover:text-primary-600 dark:group-hover:text-primary-400",
+            Astro.props.icon?.class
+        ]}
+        name={Astro.props.icon?.name}
+    />
+</div>

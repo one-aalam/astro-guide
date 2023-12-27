@@ -1,0 +1,20 @@
+---
+import Link from "./Link.astro";
+type Props = {
+    handler?: string;
+    repo?: string;
+    branch?: string;
+    commitId?: string;
+    commitMsg?: string;
+    branchMode?: boolean;
+}
+
+const { handler = 'one-aalam', repo = '', branch = '', commitId = '', commitMsg = '', branchMode = true } = Astro.props;
+---
+<div class="themed-card my-4 text-center">
+      <div class=" bg-green-50 dark:bg-gray-800 p-4">
+          <Link class="font-display" style={{margin: 0}} href={`https://github.com/${handler}/${repo}/${branchMode ? 'tree' + '/' + branch : 'commit' + '/' + commitId }`} title={commitMsg} rel="external noopener noreferrer">
+              {repo}{ branch && '/' + branch } {commitId && '-' + commitId}</Link>
+          <p style={{margin: 0}}> {commitMsg} </p>
+      </div>
+</div>

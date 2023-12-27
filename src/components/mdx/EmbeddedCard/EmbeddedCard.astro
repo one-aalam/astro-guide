@@ -1,0 +1,24 @@
+---
+type Props = {
+    href: string;
+    class?: string;
+};
+
+---
+<div class="not-prose">
+    <a
+        href={Astro.props.href}
+        target="_blank"
+        rel="noreferrer"
+        class:list={[
+            "group mb-2 block space-y-2 rounded-md p-5 shadow-md",
+            "border-l-8 border-r border-t border-b",
+            "border-base-300 dark:border-base-600",
+            "hover:border-primary-600 dark:hover:border-primary-400",
+            Astro.props.class
+        ]}
+    >
+        <slot/>
+    </a>
+</div>
+

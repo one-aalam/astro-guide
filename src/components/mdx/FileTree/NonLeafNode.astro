@@ -1,0 +1,23 @@
+---
+import LeafNode from "./LeafNode.astro";
+import type { TreeNode } from './types';
+
+import { isDirectory } from "./utils";
+
+type Props = {
+    node: TreeNode;
+    depth: number;
+};
+
+const { node, depth } = Astro.props;
+---
+<Fragment>
+    <LeafNode node={node} depth={depth} />
+    {isDirectory(node)
+        ? (node.children || []).map((c) => (
+            <ul>
+                <Astro.self node={c} depth={depth + 1} />
+            </ul>
+        ))
+        : null}
+</Fragment>

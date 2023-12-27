@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { TreeNode } from './types';
+import { isDirectory, isFile } from './utils';
+import FileMeta from './FileMeta.astro';
+
+type Props = {
+    node: TreeNode;
+    depth: number;
+};
+
+const { node, depth } = Astro.props;
+const iconName = isDirectory(node) ? 'folder-open' : 'file';
+---
+<li class="flex">
+    {depth > 0 ? (
+        <div class="flex items-center justify-end" style={{ width: `${depth * 24}px` }}>
+            <Icon name={'corner-down-right'} stroke-width={1} class="w-8 h-6 text-primary dark:text-dark-primary opacity-60" />
+        </div>
+    ) : null}
+    <Icon class={'w-8 h-8'} name={iconName} />
+    <div class="flex w-full justify-between">
+        <div>{node.name}</div>
+        <div>{isFile(node) ? <FileMeta size={node.size} /> : ''}</div>
+    </div>
+</li>
+    

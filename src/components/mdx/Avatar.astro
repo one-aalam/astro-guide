@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+type Props = {
+    src: string;
+    alt: string;
+    size?: number;
+    class?: string;
+};
+
+const { src, alt , size = 40, class: className } = Astro.props;
+
+---
+<Image
+    class:list={["flex-shrink-0 rounded-full shadow-md ring-2 ring-base-300 dark:ring-base-700", className]}
+    src={src}
+    width={size}
+    height={size}
+    alt={alt}
+/>

@@ -1,0 +1,14 @@
+---
+import { humanFileSize } from './utils';
+
+type Props = {
+    size?: number;
+    desc?: string;
+}
+
+const { size = 0, desc = '' } = Astro.props;
+---
+{!size ? '' : (
+    <span class="mr-2">({humanFileSize(size)})</span>
+)}
+{desc && <small class="text-gray-500"> {desc}</small>}
