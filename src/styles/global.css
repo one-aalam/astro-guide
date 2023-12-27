@@ -10,5 +10,53 @@
 		}
 	}
 }
+
+.astro-code {
+    @apply font-sans font-bold text-xl;
+}
+
 @tailwind components;
 @tailwind utilities;
+/*
+    https://rosepinetheme.com/palette
+    Rosé Pine Dawn
+    Rosé Pine Moon
+*/
+:root {
+    --astro-code-color-text: #575279;
+    --astro-code-color-background: #faf4ed;
+    --astro-code-token-constant: #ea9d34;
+    --astro-code-token-string: #770000;
+    --astro-code-token-comment: #9893a5;
+    --astro-code-token-keyword: #286983;
+    --astro-code-token-parameter: #AA0000;
+    --astro-code-token-function: #BB0000;
+    --astro-code-token-string-expression: #b4637a;
+    --astro-code-token-punctuation: #DD0000;
+    --astro-code-token-link: #EE0000;
+}
+
+.dark {
+    --astro-code-color-text: #e0def4;
+    --astro-code-color-background: #232136;
+    --astro-code-token-constant: #9ccfd8;
+    --astro-code-token-string: #ea9a97;
+    --astro-code-token-comment: #9893a5;
+    --astro-code-token-keyword: #286983;
+    --astro-code-token-parameter: #AA0000;
+    --astro-code-token-function: #ea9a97;
+    --astro-code-token-string-expression: #eb6f92;
+    --astro-code-token-punctuation: #DD0000;
+    --astro-code-token-link: #EE0000;
+}
+
+@media (prefers-color-scheme: light) {
+    .shiki.dark-plus {
+      display: none;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .shiki.light-plus {
+      display: none;
+    }
+}

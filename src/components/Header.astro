@@ -12,14 +12,14 @@
             <img class="header__logo-img" src="/assets/logo.svg" alt="Astro logo" />
         </a>
     </div>
-    <div class="header__meta flex-1">
+    <div class="header__meta w-full flex justify-between content-end">
         <h3 class="header__title dark:text-primarySecondaryDark">
             <a href="">{ SITE.name }</a>
         </h3>
-        <div class="header__meta-more flex">
-            <p class="header__desc">
+        <div class="header__meta-more">
+            <!-- <p class="header__desc">
                 { SITE.description }
-            </p>
+            </p> -->
             <nav class="header__nav flex">
                 <ul class="header__ref-list">
                     <li>
@@ -32,7 +32,7 @@
                             </SvgIcon>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="/rss.xml" title="RSS">
                             <SvgIcon>
                                 <path d="M4 11a9 9 0 0 1 9 9"></path>
@@ -40,7 +40,7 @@
                                 <circle cx="5" cy="19" r="1"></circle>
                             </SvgIcon>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <ModeSwitcherBtn client:visible />
                     </li>
@@ -52,13 +52,13 @@
 
 <style>
     .header {
-        @apply flex gap-4 border-b py-3 /* border-gray-200 dark:border-gray-700 - check styles/global.css */
+        @apply flex gap-4 py-3 /* border-gray-200 dark:border-gray-700 - check styles/global.css */
     }
     .header__logo-img {
         @apply w-16 h-16 rounded-full overflow-hidden
     }
     .header__title {
-        @apply text-4xl font-extrabold md:text-5xl text-primarySecondary dark:text-primarySecondaryDark
+        @apply text-4xl font-extrabold md:text-5xl text-dark-primary dark:text-dark-secondary
     }
     .header__desc {
         @apply text-xl flex-1 dark:text-gray-200

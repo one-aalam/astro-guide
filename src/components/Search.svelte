@@ -88,7 +88,7 @@
         @apply w-96 h-64 py-4 overflow-y-auto;
     }
     .search__results--none {
-        @apply  text-center text-primaryDark;
+        @apply  text-center text-dark-primary;
     }
     .note {
         @apply w-full text-center text-white;

@@ -25,9 +25,9 @@ export const NAV_ITEMS: NavItems = {
 
 export const SITE = {
     // Your site's detail?
-    name: 'Ink',
-    title: 'Astro - Ink',
-    description: 'Crisp, minimal, personal blog theme for Astro',
+    name: 'Guide',
+    title: 'Astro - Guide',
+    description: 'Crisp, minimal, personal guide theme for Astro',
     url: 'https://astro-ink.vercel.app',
     githubUrl: 'https://github.com/one-aalam/astro-ink',
     listDrafts: true

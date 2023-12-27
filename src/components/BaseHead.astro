@@ -1,5 +1,8 @@
 ---
+    import { ViewTransitions } from 'astro:transitions';
     import { SITE } from '$/config'
+    import "@fontsource/poppins";
+    import '../styles/global.css' // from '../styles/global.css'
 
     export type Props = {
         title: string
@@ -28,7 +31,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-    <meta httpEquiv="X-UA-Compatible" content="IE=edge"  />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"  />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="msapplication-config" content="/browserconfig.xml"/>
     <meta name="theme-color" content="#ffffff" />
@@ -58,7 +61,7 @@
     {image &&
         <meta property="twitter:image" content={image} />
     }
+    <ViewTransitions />
 
     <!-- Link to the global style, or the file that imports TailwindCSS constructs -->
-    <link rel="stylesheet" href={Astro.resolve('../styles/global.css')}>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- <link rel="stylesheet" href={style}> -->

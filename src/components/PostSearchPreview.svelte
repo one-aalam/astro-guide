@@ -35,12 +35,12 @@
         @apply text-lg leading-tight font-semibold text-white mb-2;
     }
     .post-preview__desc {
-        @apply text-base text-primaryDark leading-5 line-clamp-2;
+        @apply text-base text-dark-primary leading-5 line-clamp-2;
     }
     .tag-list {
         @apply list-none py-2 flex flex-wrap gap-2;
     }
     .tag {
-        @apply inline-block text-xs px-4 py-1 rounded-full text-primary bg-primaryDark;
+        @apply inline-block text-xs px-4 py-1 rounded-full text-primary bg-dark-primary;
     }
 </style>
