@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { SITE } from '$/config'
+import ChapterLayout from '$/components/ChapterLayout.astro'
+import BaseHead from '$/components/BaseHead.astro'
+import Prose from '$/components/Prose.astro'
+import Step from '../components/mdx/react/Step'
+
+interface Props {
+    chapter: CollectionEntry<'chapter'>,
+    chapters: Array<CollectionEntry<'chapter'>>,
+    guide: CollectionEntry<'guide'>,
+}
+
+const { chapter, chapters, guide } = Astro.props
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={ chapter.data.title ? `${ SITE.title } | ${chapter.data.title}` : SITE.title } description={ chapter.data.description }/>
+    </head>
+    <ChapterLayout chapter={chapter} chapters={chapters} guide={guide}>
+        <div class="chapter__header mt-6 flex">
+            <!-- <div class="chapter__number">
+                <Step number={chapter.data.seriesOrdinal} title={''} size='default'/>
+            </div> -->
+            <div class="flex-1">
+                <h1 class="chapter__title">{ chapter.data.title }</h1>
+                <h5 class="chapter__desc"> { chapter.data.description } </h5>
+            </div>
+        </div>
+        <Prose>
+            <slot />
+        </Prose>
+        <br/>
+        <!-- <a class="chapter__author" href={`https://twitter.com/${chapter.data.authors[0].name}`} title={`${chapter.data.authors[0].name}'s twitter`} target="_blank" rel="external">{ chapter.data.authors[0].name }</a> | -->
+        <span class="chapter__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(chapter.data.publishedAt))}</span>
+    </ChapterLayout>
+</html>
+<style>
+    .chapter__header {
+        @apply py-4 mb-1
+    }
+    .chapter__title {
+        @apply text-3xl font-extrabold text-dark-neutral dark:text-neutral pt-2
+    }
+    .chapter__desc {
+        @apply text-accent dark:text-dark-accent
+    }
+    .chapter__author {
+        @apply no-underline dark:text-white hover:text-primary
+    }
+    .chapter__date {
+        @apply text-gray-400
+    }
+    .chapter__tags {
+        @apply inline-flex gap-2
+    }
+    .chapter__tag {
+        @apply text-gray-400 hover:text-primary dark:hover:text-dark-primary
+    }
+</style>

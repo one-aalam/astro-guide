@@ -1,0 +1,79 @@
+---
+export const prerender = true;
+
+    import { getCollection } from 'astro:content'
+
+    import ChapterPageLayout from '$/layouts/chapter.astro'
+    import GuideList from '$/components/GuideList.astro'
+
+    import Paginator from '$/components/Paginator.astro'
+    import { SITE, PAGE_SIZE } from '$/config'
+
+
+let title = 'Blog'
+let description = 'All the articles posted so far...'
+
+export async function getStaticPaths({ paginate, rss }) {
+    const allGuides = await getCollection('guide')
+    const allChapters = await getCollection('chapter')
+
+//   const allTutorialsParsed = allTutorials.map(tutorial => {
+//       const path = tutorial.file.replace('/index.mdx', '')
+//       const slug = path.substr(path.lastIndexOf('/') + 1, path.length)
+//       return {
+//           slug,
+//           ...tutorial,
+//       }
+//   })
+
+  const allChaptersByGuides = allChapters.map(chapter => {
+        const guideSlug = chapter.id.split('/')[0]
+        const chapterSlug = chapter.slug.split('/')[1]
+    return {
+                ...chapter,
+                guide: {
+                    slug: guideSlug,
+                    chapterSlug: chapterSlug
+                },
+    }}).reduce((prev, current) => {
+        return {
+            ...prev,
+            [current.guide.slug]: prev[current.guide.slug] ? [ ...prev[current.guide.slug], current ] : [ current ]
+        }
+    }, {})
+
+    const allGuidesBySlug =  allGuides.reduce((prev, current) => {
+        return {
+            ...prev,
+            [current.slug]: current
+        }
+    }, {})
+
+    return Array.from(allChapters).map((chapter) => {
+        const guideSlug = chapter.id.split('/')[0]
+        const chapterSlug = chapter.slug.split('/')[1]
+        return {
+            params: { clug: chapterSlug, slug: guideSlug },
+            props: {
+                chapter,
+                chapters: allChaptersByGuides[guideSlug],
+                guide: allGuidesBySlug[guideSlug]
+            }
+        };
+    });
+}
+
+const { chapter, chapters, guide } = Astro.props
+const { Content, headings } = await chapter.render();
+---
+    <ChapterPageLayout chapter={chapter} chapters={chapters} guide={guide}>
+        <Content />
+    </ChapterPageLayout>
+<!--
+        <div>lorem</div>
+        <TutorialPageLayout content={tutorial} chapters={chapters}>
+        {tutorial.content.html}
+        {params.slug}
+    <GuideList posts={page.data} />
+    <Paginator page={page} />
+</TutorialPageLayout> -->

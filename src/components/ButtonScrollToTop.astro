@@ -1,0 +1,19 @@
+---
+
+---
+<astro-btn-stt>
+    <button class="w-12 h-12 bg-gray-200 rounded-full shadow-inner">&uarr;</button>
+</astro-btn-stt>
+<script>
+    class ButtonScrollToTop extends HTMLElement {
+        constructor() {
+            super();
+            const self = this;
+            const btnScrollToTop = self.querySelector(`button`);
+            btnScrollToTop?.addEventListener('click', function(){
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            })
+        }
+    }
+    customElements.define("astro-btn-stt", ButtonScrollToTop);
+</script>
