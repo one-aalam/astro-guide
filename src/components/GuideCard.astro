@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props {
+    guide: CollectionEntry<'guide'>
+}
+const { guide } = Astro.props
+---
+<a href={`/guides/${guide.slug}`} title={guide.data.title}>
+    <div class="guide overflow-hidden text-center">
+        <div class="guide__cover bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 flex items-end overflow-hidden justify-center w-64 h-64 rounded-full absolute -top-36 p-2">
+            {guide.data.coverImagePath && <img class="block w-20 h-20" src={guide.data.coverImagePath.src} alt={guide.data.coverImagePath} height={100} />}
+        </div>
+        <h4 class="guide__title mt-24">
+            {guide.data.title}
+        </h4>
+        <p class="guide__desc">
+            {guide.data.description}
+        </p>
+        <span class="guide__meta">
+            <div class="pill">
+                {guide.data.chapters} chapters
+            </div>
+        </span>
+    </div>
+</a>
+<style>
+    .guide {
+        @apply flex flex-col gap-6 px-8 py-10 rounded-md shadow-xl hover:shadow-2xl hover:translate-x-1 hover:-translate-y-1 transition-all relative min-h-60;
+        @apply bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100;
+    }
+    .guide__title {
+        @apply text-4xl font-black text-white hover:underline mb-1;
+    }
+    .guide__desc {
+        @apply text-base leading-6 line-clamp-2 text-gray-50;
+    }
+    .pill {
+        @apply inline-block w-32 px-2 py-1 rounded-md shadow-md text-sm font-semibold uppercase bg-gray-800 text-white bg-opacity-80;
+    }
+</style>
