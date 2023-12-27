@@ -1,0 +1,25 @@
+---
+import { SITE } from '$/config'
+import GuideLayout from '$/components/GuideLayout.astro'
+import BaseHead from '$/components/BaseHead.astro'
+import Prose from '$/components/Prose.astro'
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+    guide: CollectionEntry<'guide'>
+    chapters: Array<CollectionEntry<'chapter'>>
+}
+
+const { guide, chapters } = Astro.props
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={ guide.data.title ? `${ SITE.title } | ${guide.data.title}` : SITE.title } description={ guide.data.description }/>
+    </head>
+    <GuideLayout guide={guide} chapters={chapters}>
+        <Prose>
+            <slot />
+        </Prose>
+    </GuideLayout>
+</html>

@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import GuideCard from './GuideCard.astro'
+
+interface Props {
+    guides: Array<CollectionEntry<'guide'>>
+}
+
+const { guides } = Astro.props
+// @ts-expect-error
+const sortedGuides = guides.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+---
+<section class="guide__list">
+    {sortedGuides.map((guide) => (
+        <GuideCard guide={guide}/>
+    ))}
+</section>
+<style>
+    .guide__list {
+        @apply grid grid-cols-3 gap-12
+    }
+</style>

@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    chapter: CollectionEntry<'chapter'>,
+    number: number
+}
+
+const { chapter, number } = Astro.props;
+---
+<li class="list-none">
+    <a href={`/guides/${chapter.guide.slug}/chapter/${chapter.guide.chapterSlug}`} title={chapter.data.title}>
+
+        <div class="chapter">
+            <div class="chapter__top">
+                <div class="chapter__num">{ number }</div>
+                <h4 class="chapter__title">{chapter.data.title}</h4>
+            </div>
+            
+            <div class="chapter__detail">
+                <p class="chapter__desc">{chapter.data.description}</p>
+            </div>
+        </div>
+    </a>
+</li>
+<style>
+    .chapter {
+        @apply p-2 border border-dark-primary dark:border-primary border-opacity-20 rounded-md shadow-sm flex flex-col justify-between transition-all hover:translate-x-0.5 hover:-translate-y-0.5 cursor-pointer;
+    }
+    .chapter__top {
+        @apply flex;
+    }
+    .chapter__num {
+        @apply text-5xl font-black text-gray-400 dark:text-gray-600 w-16 flex items-center justify-center;
+    }
+    .chapter__title {
+        @apply font-semibold text-lg text-gray-800 dark:text-gray-200 mb-1;
+    }
+    .chapter__detail {
+        @apply flex;
+    }
+    .chapter__desc {
+        @apply pl-14 text-sm  text-gray-800 dark:text-gray-200 break-words;
+    }
+</style>

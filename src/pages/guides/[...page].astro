@@ -1,0 +1,35 @@
+---
+export const prerender = true;
+
+import { getCollection, type CollectionEntry } from 'astro:content'
+import DefaultPageLayout from '../../layouts/default.astro'
+import GuideList from '../../components/GuideList.astro'
+import Paginator from '../../components/Paginator.astro'
+import { SITE, PAGE_SIZE } from '../../config'
+
+let title = 'Guides'
+let description = 'All the guides posted so far...'
+
+type Props = {
+    page: {
+      data: CollectionEntry<'guide'>[]
+    }
+}
+
+export async function getStaticPaths({ paginate, rss }) {
+  const allGuides: CollectionEntry<'guide'>[] = await getCollection('guide');
+  const sortedGuides = allGuides.sort((guideCurrent, guideNext) => {
+    return guideNext.data.date.valueOf() - guideCurrent.data.date.valueOf();
+  })
+  return paginate(sortedGuides, {
+      pageSize: PAGE_SIZE
+  })
+}
+
+const { page } = Astro.props
+---
+<DefaultPageLayout content={{ title, description }}>
+    <strong class="block uppercase py-4">recent guides</strong>
+    <GuideList guides={page.data} />
+    <Paginator page={page} />
+</DefaultPageLayout>

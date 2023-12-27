@@ -1,0 +1,48 @@
+---
+export const prerender = true;
+
+import { getCollection } from 'astro:content'
+// @ts-expect-error
+import GuidePageLayout from '$/layouts/guide.astro'
+
+let title = 'Guides'
+let description = 'All the guides posted so far...'
+
+export async function getStaticPaths({ paginate, rss }) {
+    const allGuides = await getCollection('guide')
+    const allChapters = await getCollection('chapter')
+
+    const allChaptersByGuides = allChapters.map(chapter => {
+            const guideSlug = chapter.id.split('/')[0]
+            const chapterSlug = chapter.slug.split('/')[1]
+        return {
+                    ...chapter,
+                    guide: {
+                        slug: guideSlug,
+                        chapterSlug: chapterSlug
+                    },
+        }}).reduce((prev, current) => {
+            return {
+                ...prev,
+                [current.guide.slug]: prev[current.guide.slug] ? [ ...prev[current.guide.slug], current ] : [ current ]
+            }
+        }, {})
+
+    return Array.from(allGuides).map((guide) => {
+        return {
+            params: { slug: guide.slug },
+            props: {
+                guide,
+                chapters: allChaptersByGuides[guide.slug]
+            }
+        };
+    });
+}
+
+const { guide, chapters } = Astro.props
+const { Content } = await guide.render();
+---
+
+<GuidePageLayout guide={guide} chapters={chapters}>
+    <Content/>
+</GuidePageLayout>
