@@ -8,9 +8,11 @@ import Footer from './Footer.astro';
 import Portal from './Portal.astro';
 import SearchModal from './SearchModal.svelte'
 import RadialProgress from './RadialProgress/RadialProgress.astro';
-import Timeline from './Timeline/Timeline.astro';
-import TimelineItem from './Timeline/TimelineItem.astro';
 import ButtonScrollToTop from './ButtonScrollToTop.astro';
+import ChapterOutline from './ChapterOutline.astro';
+import SidebarSwitcher from './popover/SidebarSwitcher.svelte';
+import ChapterSidebar from './popover/ChapterSidebar.svelte';
+import ChapterBar from './ChapterBar.astro';
 
 interface Props {
     guide: CollectionEntry<'guide'>,
@@ -24,33 +26,18 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
 ---
 <body class="font-sans antialiased min-h-screen bg-base-100 dark:bg-dark-base-100 text-dark-base-100 dark:text-base-100">
     <div class="transition-colors">
-        <div class="mx-auto max-w-6xl px-4 md:px-0">
+        <div class="mx-auto max-w-7xl px-4 md:px-0">
             <br class="my-4"/>
             <Header/>
-            <div class="chapter-bar sticky-banner js-sticky-banner flex gap-2 w-full px-2 py-2 sticky rounded-full shadow-lg bg-gray-100 dark:bg-gray-700 bg-opacity-90" data-target-in="#sticky-banner-target">
-                <div class="ctrl flex gap-4">
-                    <RadialProgress percent={chapter.data.seriesOrdinal / chapters.length * 100} colorCircle={true} size={48} stroke={10} />
-                </div>
-                <div class="chapter-bar__meta flex flex-col flex-1 border-l border-r px-2">
-                    <small class="text-gray-600">Chapter {chapter.data.seriesOrdinal} of {chapters.length} | {chapter.data.tocTitle}</small>
-                    <strong>{guide.data.title}</strong>
-                </div>
-                <div class="stat">
-                    <ButtonScrollToTop/>
-                </div>
-            </div>
+            <!-- Chapter Bar -->
+            <ChapterBar chapter={chapter} totalChapters={chapters.length} guideTitle={guide.data.title}/>
             <section class="flex justify-between content-end" id="sticky-banner-target">
                 <!-- Sidebar -->
-                <aside class="sidebar sidebar--static@md js-sidebar">
-                    <!-- <a class="font-semibold text-dark-neutral dark:text-neutral" href={`/guides/${guide.slug}`} title={guide.data.title}>&larr; &nbsp;{guide.data.title}</a> -->
-                    <Timeline class='fixed'>
-                        { sortedChapters.map(chapter => 
-                            <TimelineItem>
-                                <a class:list={['text-dark-neutral dark:text-neutral', isActiveChapter(chapter) ? 'text-primary' : '']} href={chapter.guide.chapterSlug} title={chapter.data.title}>{chapter.data.tocTitle}</a>
-                            </TimelineItem>
-                        )}
-                    </Timeline>
-                </aside>
+                <ChapterSidebar client:load>
+                      <span slot="title">table of content</span>
+                      <Icon slot="trigger" name="x-circle" class="w-6 h-6" />
+                      <ChapterOutline chapters={chapters} selectedChapter={chapter} />
+                </SidebarWrapper>
                 <!-- Main -->
                 <main class="main">
                     <slot/>
@@ -70,207 +57,10 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
         min-height: 580px
     }
 
-    .sidebar {
-        @apply hidden lg:flex flex-col gap-6 text-white pr-8 py-10;
-        @apply w-3/12 text-left top-16 text-black min-h-full sticky self-start;
-    }
     .main {
         @apply w-full lg:w-9/12 md:px-8 lg:px-0;
-    }
-    .sidebar__title {
-        @apply text-4xl font-black text-dark-base-100 dark:text-base-100 hover:underline mb-1;
-    }
-    .sidebar__desc {
-        @apply text-base leading-6 text-gray-50;
     }
     .meta {
         @apply text-sm font-semibold uppercase text-dark-primary;
     }
 </style>
-
-<style>
-.sticky-banner {
-  /* position: fixed; */
-  top: 10px;
-  left: 0;
-  width: 100%;
-  @apply z-10;
-  /* transform: translateY(-100%); */
-  transition: transform 0.3s;
-  
-}
-
-.sticky-banner--bottom {
-  top: auto;
-  bottom: -1px;
-  transform: translateY(100%);
-}
-
-.sticky-banner--visible {
-  transform: translateY(0);
-}
-
-.sticky-banner:not(.sticky-banner--visible) {
-  /* box-shadow: none; */
-}
-</style>
-<script lang="ts">
-  if(!Util) function Util () {};
-
-Util.addClass = function(el, className) {
-  var classList = className.split(' ');
-  el.classList.add(classList[0]);
-  if (classList.length > 1) Util.addClass(el, classList.slice(1).join(' '));
-};
-
-Util.removeClass = function(el, className) {
-  var classList = className.split(' ');
-  el.classList.remove(classList[0]);
-  if (classList.length > 1) Util.removeClass(el, classList.slice(1).join(' '));
-};
-
-Util.toggleClass = function(el, className, bool) {
-  if(bool) Util.addClass(el, className);
-  else Util.removeClass(el, className);
-};
-
-// File#: _1_sticky-banner
-// Usage: codyhouse.co/license
-(function() {
-  var StickyBanner = function(element) {
-    this.element = element;
-    this.offsetIn = 0;
-    this.offsetOut = 0;
-    this.targetIn = this.element.getAttribute('data-target-in') ? document.querySelector(this.element.getAttribute('data-target-in')) : false;
-    this.targetOut = this.element.getAttribute('data-target-out') ? document.querySelector(this.element.getAttribute('data-target-out')) : false;
-    this.reset = 0;
-    // check if the window is the scrollable element
-    this.dataElement = this.element.getAttribute('data-scrollable-element') || this.element.getAttribute('data-element');
-    this.scrollElement = this.dataElement ? document.querySelector(this.dataElement) : window;
-    if(!this.scrollElement) this.scrollElement = window;
-    this.scrollingId = false;
-    getBannerOffsets(this);
-    initBanner(this);
-  };
-
-  function getBannerOffsets(element) { // get offset in and offset out values
-    // update offsetIn
-    element.offsetIn = 0;
-    var windowTop = getScrollTop(element);
-
-    if(element.targetIn) {
-      var boundingClientRect = element.targetIn.getBoundingClientRect();
-      element.offsetIn = boundingClientRect.top + windowTop + boundingClientRect.height;
-    }
-    var dataOffsetIn = element.element.getAttribute('data-offset-in');
-    if(dataOffsetIn) {
-      element.offsetIn = element.offsetIn + parseInt(dataOffsetIn);
-    }
-    // update offsetOut
-    element.offsetOut = 0;
-    if(element.targetOut) {
-      var boundingClientRect = element.targetOut.getBoundingClientRect();
-      element.offsetOut = boundingClientRect.top + windowTop - window.innerHeight;
-    }
-    var dataOffsetOut = element.element.getAttribute('data-offset-out');
-    if(dataOffsetOut) {
-      element.offsetOut = element.offsetOut + parseInt(dataOffsetOut);
-    }
-  };
-
-  function initBanner(element) {
-    resetBannerVisibility(element);
-
-    element.element.addEventListener('resize-banner', function(){
-      getBannerOffsets(element);
-      resetBannerVisibility(element);
-    });
-
-    element.element.addEventListener('scroll-banner', function(){
-      if(element.reset < 10) {
-        getBannerOffsets(element);
-        element.reset = element.reset + 1;
-      }
-      resetBannerVisibility(element);
-    });
-
-    if(element.dataElement && element.scrollElement) {
-      // the scrollable element is different from the window - detect the scrolling
-      element.scrollElement.addEventListener('scroll', function(event){
-        if(element.scrollingId) return;
-        element.scrollingId = true;
-        window.requestAnimationFrame(function(){
-          element.element.dispatchEvent(new CustomEvent('scroll-banner'));
-          element.scrollingId = false;
-        })
-      });
-    }
-  };
-
-  function resetBannerVisibility(element) {
-    var scrollTop = getScrollTop(element),
-      topTarget = false,
-      bottomTarget = false;
-    if(element.offsetIn <= scrollTop) {
-      topTarget = true;
-    }
-    if(element.offsetOut == 0 || scrollTop < element.offsetOut) {
-      bottomTarget = true;
-    }
-
-    Util.toggleClass(element.element, 'sticky-banner--visible', bottomTarget && topTarget);
-  };
-
-  function getScrollTop(element) {
-    // the scrollable element could be different from the window element
-    var windowTop = element.scrollElement.scrollTop || document.documentElement.scrollTop;
-    if(!element.dataElement) windowTop = window.scrollY || document.documentElement.scrollTop;
-    return windowTop;
-  };
-
-  //initialize the Sticky Banner objects
-	var stckyBanner = document.getElementsByClassName('js-sticky-banner');
-	if( stckyBanner.length > 0 ) {
-		for( var i = 0; i < stckyBanner.length; i++) {
-			(function(i){new StickyBanner(stckyBanner[i]);})(i);
-    }
-    
-    // init scroll/resize
-    var resizingId = false,
-      scrollingId = false,
-      resizeEvent = new CustomEvent('resize-banner'),
-      scrollEvent = new CustomEvent('scroll-banner');
-    
-    window.addEventListener('resize', function(event){
-      clearTimeout(resizingId);
-      resizingId = setTimeout(function(){
-        doneResizing(resizeEvent);
-      }, 300);
-    });
-
-    window.addEventListener('scroll', function(event){
-      if(scrollingId) return;
-      scrollingId = true;
-      window.requestAnimationFrame 
-        ? window.requestAnimationFrame(function(){
-          doneResizing(scrollEvent);
-          scrollingId = false;
-        })
-        : setTimeout(function(){
-          doneResizing(scrollEvent);
-          scrollingId = false;
-        }, 200);
-
-      resizingId = setTimeout(function(){
-        doneResizing(resizeEvent);
-      }, 300);
-    });
-
-    function doneResizing(event) {
-      for( var i = 0; i < stckyBanner.length; i++) {
-        (function(i){stckyBanner[i].dispatchEvent(event)})(i);
-      };
-    };
-	}
-}());
-</script>

@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Timeline from './timeline/timeline.astro';
+import TimelineItem from './timeline/timelineitem.astro';
+
+type Props = {
+    chapters: CollectionEntry<'chapter'>[],
+    selectedChapter: CollectionEntry<'chapter'>
+}
+
+const { chapters, selectedChapter } = Astro.props
+const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.seriesOrdinal);
+const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => selectedChapter.slug.split('/').pop() === currentChapter.slug.split('/').pop()
+---
+<div class="chapter__outline w-full">
+    <Timeline class='fixed'>
+        { sortedChapters.map(chapter => 
+            <TimelineItem>
+                <a class:list={['text-dark-neutral dark:text-neutral', isActiveChapter(chapter) ? 'text-primary' : '']} href={chapter.guide.chapterSlug} title={chapter.data.title}>{chapter.data.tocTitle}</a>
+            </TimelineItem>
+        )}
+    </Timeline>
+</div>
+<style>
+    .chapter__outline {
+        @apply w-full;
+    }
+</style>
