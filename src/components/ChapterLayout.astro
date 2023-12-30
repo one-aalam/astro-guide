@@ -1,26 +1,28 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { Icon } from 'astro-icon/components';
 
-import BaseLayout from './BaseLayout.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import Portal from './Portal.astro';
 import SearchModal from './SearchModal.svelte'
-import RadialProgress from './RadialProgress/RadialProgress.astro';
-import ButtonScrollToTop from './ButtonScrollToTop.astro';
 import ChapterOutline from './ChapterOutline.astro';
-import SidebarSwitcher from './popover/SidebarSwitcher.svelte';
 import ChapterSidebar from './popover/ChapterSidebar.svelte';
 import ChapterBar from './ChapterBar.astro';
 
 interface Props {
     guide: CollectionEntry<'guide'>,
     chapter: CollectionEntry<'chapter'>,
-    chapters: Array<CollectionEntry<'chapter'>>
+    chapters: Array<CollectionEntry<'chapter'>>,
+    headings?: Heading[]
 }
 
-const { chapters, guide, chapter } = Astro.props
+type Heading = {
+    depth: number
+    slug: string
+    text: string
+}
+
+const { chapters, guide, chapter, headings } = Astro.props
 const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => chapter.slug.split('/').pop() === currentChapter.slug.split('/').pop()
 const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.seriesOrdinal);
 ---
@@ -34,9 +36,9 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
             <section class="flex justify-between content-end" id="sticky-banner-target">
                 <!-- Sidebar -->
                 <ChapterSidebar client:load>
-                      <span slot="title">table of content</span>
-                      <Icon slot="trigger" name="x-circle" class="w-6 h-6" />
-                      <ChapterOutline chapters={chapters} selectedChapter={chapter} />
+                      <!-- <span slot="title">table of content</span>
+                      <Icon slot="trigger" name="x-circle" class="w-6 h-6" /> -->
+                      <ChapterOutline chapters={chapters} selectedChapter={chapter} headings={headings} />
                 </SidebarWrapper>
                 <!-- Main -->
                 <main class="main">

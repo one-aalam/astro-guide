@@ -14,7 +14,7 @@ type Props = {
 
 const { chapter, totalChapters, guideTitle } = Astro.props;
 ---
-<div class="chapter-bar sticky-banner js-sticky-banner flex gap-2 w-full px-2 py-2 sticky rounded-full shadow-lg bg-gray-100 dark:bg-gray-700 bg-opacity-90 z-20" data-target-in="#sticky-banner-target">
+<div class="chapter-bar sticky-banner js-sticky-banner flex gap-2 w-full px-2 py-2 sticky rounded-full shadow-lg bg-gray-100 dark:bg-gray-600 bg-opacity-90 dark:bg-opacity-90 z-20" data-target-in="#sticky-banner-target">
     <div class="ctrl flex gap-4">
         <RadialProgress percent={chapter.data.seriesOrdinal / totalChapters * 100} colorCircle={true} size={48} stroke={10} />
         <SidebarSwitcher client:load>
@@ -22,8 +22,8 @@ const { chapter, totalChapters, guideTitle } = Astro.props;
             <Icon name="x-circle" slot="hide" class="w-6 h-6" />
         </SidebarSwitcher>
     </div>
-    <div class="chapter-bar__meta flex flex-col flex-1 border-l border-r px-2">
-        <small class="text-gray-600">Chapter {chapter.data.seriesOrdinal} of {totalChapters} | {chapter.data.tocTitle}</small>
+    <div class="chapter-bar__meta flex flex-col flex-1 border-l border-r border-gray-200 dark:border-gray-700 px-2">
+        <small class="text-gray-600 dark:text-gray-300">Chapter {chapter.data.seriesOrdinal} of {totalChapters} | {chapter.data.tocTitle}</small>
         <strong>{guideTitle}</strong>
     </div>
     <div class="stat">

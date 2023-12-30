@@ -5,10 +5,18 @@ import TimelineItem from './timeline/timelineitem.astro';
 
 type Props = {
     chapters: CollectionEntry<'chapter'>[],
-    selectedChapter: CollectionEntry<'chapter'>
+    selectedChapter: CollectionEntry<'chapter'>,
+    headings?: Heading[],
+    supressHeadings?: boolean
 }
 
-const { chapters, selectedChapter } = Astro.props
+type Heading = {
+    depth: number
+    slug: string
+    text: string
+}
+
+const { chapters, selectedChapter, headings = [], supressHeadings = true } = Astro.props
 const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.seriesOrdinal);
 const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => selectedChapter.slug.split('/').pop() === currentChapter.slug.split('/').pop()
 ---
@@ -17,6 +25,17 @@ const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => selected
         { sortedChapters.map(chapter => 
             <TimelineItem>
                 <a class:list={['text-dark-neutral dark:text-neutral', isActiveChapter(chapter) ? 'text-primary' : '']} href={chapter.guide.chapterSlug} title={chapter.data.title}>{chapter.data.tocTitle}</a>
+                {isActiveChapter(chapter) && headings.length && !supressHeadings && <Timeline>
+                    {
+                        headings.map(heading => 
+                            <TimelineItem>
+                                <a class="text-sm" href={`#${heading.slug}`} title={heading.text}>
+                                    {heading.text}
+                                </a>
+                            </TimelineItem>
+                        )
+                    }
+                </Timeline>}
             </TimelineItem>
         )}
     </Timeline>

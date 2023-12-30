@@ -6,20 +6,27 @@ import BaseHead from '$/components/BaseHead.astro'
 import Prose from '$/components/Prose.astro'
 import Step from '../components/mdx/react/Step'
 
-interface Props {
+type Props = {
     chapter: CollectionEntry<'chapter'>,
     chapters: Array<CollectionEntry<'chapter'>>,
     guide: CollectionEntry<'guide'>,
+    headings?: Heading[] 
 }
 
-const { chapter, chapters, guide } = Astro.props
+type Heading = {
+    depth: number
+    slug: string
+    text: string
+}
+
+const { chapter, chapters, guide, headings } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
     <head>
         <BaseHead title={ chapter.data.title ? `${ SITE.title } | ${chapter.data.title}` : SITE.title } description={ chapter.data.description }/>
     </head>
-    <ChapterLayout chapter={chapter} chapters={chapters} guide={guide}>
+    <ChapterLayout chapter={chapter} chapters={chapters} guide={guide} headings={headings}>
         <div class="chapter__header mt-6 flex">
             <!-- <div class="chapter__number">
                 <Step number={chapter.data.seriesOrdinal} title={''} size='default'/>
