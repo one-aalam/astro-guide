@@ -8,6 +8,7 @@ import SearchModal from './SearchModal.svelte'
 import ChapterOutline from './ChapterOutline.astro';
 import ChapterSidebar from './popover/ChapterSidebar.svelte';
 import ChapterBar from './ChapterBar.astro';
+import ChapterCongrats from './ChapterCongrats.astro';
 
 interface Props {
     guide: CollectionEntry<'guide'>,
@@ -43,6 +44,7 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
                 <!-- Main -->
                 <main class="main">
                     <slot/>
+                    <ChapterCongrats chapter={chapter} nextChapter={sortedChapters[chapter.data.seriesOrdinal]}/>
                 </main>
             </section>
             <br class="my-4"/>
