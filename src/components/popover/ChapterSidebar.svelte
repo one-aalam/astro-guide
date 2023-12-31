@@ -8,11 +8,13 @@
 <MediaQuery query={MEDIA_QUERY.lg} let:matches>
     {#if matches || $isSidebarVisible}
         <aside 
-            class="sidebar sidebar--static@md js-sidebar" 
+            class="sidebar" 
             tabindex="-1" 
             use:popoverBindings 
             on:esc={hideSidebar}
+            on:out={hideSidebar}
             transition:fly={{x: -100}}
+            role={$isSidebarVisible && !matches ? 'alertdialog' : null}
         >
             <div class="sidebar__panel">
                 <header class="sidebar__header">
@@ -46,9 +48,6 @@
     }
     .sidebar__panel {
         @apply flex flex-col px-3 py-2;
-    }
-    .sidebar__desc {
-        @apply text-base leading-6 text-gray-50;
     }
     .meta {
         @apply text-sm font-semibold uppercase text-dark-primary;
