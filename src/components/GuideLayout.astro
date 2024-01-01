@@ -11,11 +11,11 @@ import GuideChapter from './GuideChapter.astro';
 interface Props {
     guide: CollectionEntry<'guide'>
     chapters: Array<CollectionEntry<'chapter'>>
-    requires?: string[]
 }
 
-const { guide, chapters, requires = ['HTML', 'CSS', 'JavaScript'] } = Astro.props
-const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
+const { guide, chapters } = Astro.props
+
+const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</strong>`).join(', ')
 ---
 <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
     <div class="bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100  transition-colors min-h-screen">
@@ -28,19 +28,11 @@ const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
                     <h4 class="post-preview__title">
                         {guide.data.title}
                     </h4>
-                    <p class="post-preview__desc">
-                        {guide.data.description}
-                        This guide will help you get basic understanding of <strong>Astro</strong>, to help you build modern and performant web applications. You ship 0 javascript by default.
-                    </p>
+                    <p class="post-preview__desc" set:html={guide.data.heroDescription}></p>
                     <div>
                         <a class="inline-block cursor-pointer bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary px-8 py-4 rounded-full font-bold shadow-primary shadow-xl border border-primary dark:border-dark-primary hover:shadow-2xl" href={`/guides/${chapters[0].guide.slug}/chapter/${chapters[0].guide.chapterSlug}`} title="Get Started">Get Started</a>
                     </div>
-                    <div class="meta text-white">
-                        <!-- <div class="pill"><strong>{guide.data.toc.length}</strong> chapters</div> -->
-                        <!-- <strong>{guide.data.contributors.length}+</strong> contributors //  -->
-                        
-                        <br/>
-                    </div>
+                    <!-- Guide Extras -->
                     <p class="text-sm">Requires basic understanding of <Fragment set:html={niceToKnow}>{niceToKnow}</Fragment>. See the <a href="#overview" title="Learn More">ToC</a> or, <a href="#overview" title="Learn More">learn more</a> about what you'll build below.</p>
 
                 </div>
@@ -86,7 +78,7 @@ const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
                             <ul class="author__list flex flex-col gap-6">
                                 { guide.data.authors.map(author => <li class="author flex justify-between">
                                     <div class="w-16 flex items-center justify-center">
-                                        <img class="rounded-full w-12 h-12" src={author.name} />
+                                        <img class="rounded-full w-12 h-12" src={author.avatar} />
                                     </div>
                                     <div class="author__detail flex-1">
                                         <h4 class="chapter__title font-semibold text-base text-gray-800">{author.name}</h4>
@@ -95,14 +87,14 @@ const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
                                 </li>)}
                             </ul>
                         </div>
-                        <div class="w-1/2 none">
+                        <!-- <div class="w-1/2 none">
                             <div class="meta mb-4">
                                 contributors
                             </div>
                             <ul class="author__list flex flex-col gap-2">
                                 { guide.data.contributors.map(contributor => <li class="author flex justify-between">
                                     <div class="w-16 flex items-center justify-center">
-                                        <img class="rounded-full w-12 h-12" src={contributor.name} />
+                                        <img class="rounded-full w-12 h-12" src={contributor.avatar} />
                                     </div>
                                     <div class="author__detail flex-1">
                                         <h4 class="chapter__title font-semibold text-base text-gray-800">{contributor.name}</h4>
@@ -110,7 +102,7 @@ const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
                                     </div>
                                 </li>)}
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- <slot /> -->

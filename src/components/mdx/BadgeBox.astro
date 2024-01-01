@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+
+type Props = {
+    topics: string[]
+}
+
+const DEFAULT_TOPICS = ['React', 'styled-components', 'Prettier', 'GitHub Actions', 'ESLint', 'Chromatic', 'Jest', 'npm', 'Auto']
+
+const { topics = DEFAULT_TOPICS } = Astro.props
+---
+<div class="badge-box">
+    {
+        topics.map(topic => <div class="badge"><Image src={`https://img.shields.io/npm/v/${topic.replace(/\s+/g, '-').toLowerCase()}.svg`} alt={topic} width={16} height={16} />{topic}</div>)
+    }
+</div>
+<style>
+    .badge-box {
+        @apply flex flex-wrap gap-2;
+    }
+    .badge {
+        @apply flex px-2 py-1 rounded-sm bg-gray-100;
+    }
+</style>

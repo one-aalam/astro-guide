@@ -34,6 +34,7 @@ export default defineConfig({
       './src/components/mdx/ImageBrowser.astro',
       './src/components/mdx/Alert.astro',
       './src/components/mdx/InfoAlert.astro',
+      './src/components/mdx/BadgeBox.astro'
     ],
   }), 
   astroCodeSnippets(),mdx(), sitemap(), react(), svelte(), tailwind(), icon()],
