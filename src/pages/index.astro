@@ -3,13 +3,19 @@ import DefaultPageLayout from '$/layouts/default.astro'
 import GuideList from '$/components/GuideList.astro'
 
 
-const title = 'Home'
-const description = 'Astro-Ink is a crisp, minimal, personal blog theme for Astro'
+const title = 'Ilm - Stay Curious!'
+const description = 'Guides for Full-stack developers and tech enthusiasts'
 
-const posts = Astro.glob('./tutorials/*.md')
 ---
 <DefaultPageLayout content={{ title, description }} showPageHeader={false}>
-    <GuideList posts={posts} />
+    <div class="banner flex flex-col justify-center items-center dark:text-gray-50 min-h-svh overflow-hidden">
+        <div class="banner__cover bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 flex items-end overflow-hidden justify-center w-64 h-64 rounded-full absolute -top-36 p-2">
+        </div>
+        <h1 class="text-9xl leading-tight font-semibold text-transparent bg-clip-text bg-gradient-to-b from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary">Stay Curious!</h1>
+        <p>Hand-written guides on the latest and best tech out there, to take you from zero to hero.</p>
+        <br/>
+        <a class="cta" href={`/guides`}>Explore Guides &rarr;</a>
+    </div>
 </DefaultPageLayout>
 
 <style>
@@ -18,5 +24,8 @@ const posts = Astro.glob('./tutorials/*.md')
     }
     .action__go-to-blog {
         @apply text-base uppercase text-gray-500 dark:text-gray-400 hover:underline
+    }
+    .cta {
+        @apply inline-block cursor-pointer bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary px-8 py-4 rounded-full font-bold shadow-primary shadow-2xl border border-primary dark:border-dark-primary hover:shadow-2xl transition-all text-white;
     }
 </style>
