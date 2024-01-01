@@ -10,7 +10,9 @@ const { guide } = Astro.props
 <a href={`/guides/${guide.slug}`} title={guide.data.title}>
     <div class="guide">
         <div class="guide__cover">
-            {guide.data.coverImagePath && <img class="block w-20 h-20" src={guide.data.coverImagePath.src} alt={guide.data.coverImagePath} height={100} />}
+            <div class="guide__shape">
+                {guide.data.coverImagePath && <img class="guide__fw" src={guide.data.coverImagePath.src} alt={guide.data.coverImagePath} height={100} />}
+            </div>
         </div>
         <h4 class="guide__title mt-24">
             {guide.data.title}
@@ -20,7 +22,7 @@ const { guide } = Astro.props
         </p>
         <span class="guide__meta">
             <div class="pill">
-                {guide.data.chapters} chapters
+                {guide.data.chapters} chapters // beginner-friendly
             </div>
         </span>
     </div>
@@ -31,7 +33,15 @@ const { guide } = Astro.props
         @apply bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100;
     }
     .guide__cover {
-        @apply bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 flex items-end overflow-hidden justify-center w-64 h-64 rounded-full absolute -top-36 p-2;
+        @apply flex justify-center w-full h-auto absolute -top-36 left-0;
+    }
+    .guide__shape {
+        @apply w-64 h-64 p-2 bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 rounded-full overflow-hidden;
+        /* framework logo */
+        @apply flex justify-center items-end ;
+    }
+    .guide__fw {
+        @apply block w-20 h-20;
     }
     .guide__title {
         @apply text-4xl font-black text-white line-clamp-2 hover:underline mb-1;
@@ -40,6 +50,6 @@ const { guide } = Astro.props
         @apply text-base leading-6 line-clamp-2 text-gray-50;
     }
     .pill {
-        @apply inline-block w-32 px-2 py-1 rounded-md shadow-md text-sm font-semibold uppercase bg-gray-800 text-white bg-opacity-80;
+        @apply inline-block text-xs px-2 py-1 rounded-md font-semibold uppercase bg-gray-500 text-white bg-opacity-80 shadow-inner;
     }
 </style>
