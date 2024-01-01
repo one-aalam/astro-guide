@@ -11,15 +11,17 @@ import GuideChapter from './GuideChapter.astro';
 interface Props {
     guide: CollectionEntry<'guide'>
     chapters: Array<CollectionEntry<'chapter'>>
+    requires?: string[]
 }
 
-const { guide, chapters } = Astro.props
+const { guide, chapters, requires = ['HTML', 'CSS', 'JavaScript'] } = Astro.props
+const niceToKnow = requires.map(tech => `<strong>${tech}</strong>`).join(', ')
 ---
 <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
     <div class="bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100  transition-colors min-h-screen">
         <main class="mx-auto max-w-7xl px-4 md:px-0">
             <br class="my-4"/>
-            <Header/>
+            <Header useBaseColors={true}/>
             <!-- <Nav/> -->
             <div class="flex justify-between content-end py-48 ">
                 <div class="post-preview w-3/5 text-left">
@@ -39,9 +41,7 @@ const { guide, chapters } = Astro.props
                         
                         <br/>
                     </div>
-                    <p class="text-sm">Requires basic understanding of <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong></p>
-
-                    <p>See the <a href="#overview" title="Learn More">ToC</a> or, <a href="#overview" title="Learn More">learn more</a> about what you'll build.</p>
+                    <p class="text-sm">Requires basic understanding of <Fragment set:html={niceToKnow}>{niceToKnow}</Fragment>. See the <a href="#overview" title="Learn More">ToC</a> or, <a href="#overview" title="Learn More">learn more</a> about what you'll build below.</p>
 
                 </div>
                 <div class="w-2/5 pl-10">

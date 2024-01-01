@@ -1,47 +1,56 @@
 ---
-    import { SITE } from '$/config'
-    import SvgIcon from './SvgIcon.astro'
     import ModeSwitcherBtn from './ModeSwitcherBtn.svelte'
     import SearchBtn from './SearchBtn.svelte'
+    const NAV_ITEMS = [
+        {
+            path: '/guides',
+            title: 'Guides'
+        },
+        {
+            path: '/about',
+            title: 'About'
+        },
+    ]
 
+    type Props = {
+        useBaseColors?: boolean
+    }
+
+    const { useBaseColors = false } = Astro.props
 ---
 
-<header class="header">
+<header class="header sticky">
     <div class="header__logo">
-        <a href="/" class="avatar">
-            <img class="header__logo-img" src="/assets/logo.svg" alt="Astro logo" />
+        <a class="" href="/"
+        >
+        <button title="Ilm - Stay Curious!" class="font-display text-lg dark:text-gray-50 px-2 py-1 shadow-inner flex items-center">
+            <strong class=" font-black">ilm</strong>&nbsp;<span class="inline-block w-2 h-2 bg-primary dark:bg-dark-primary rounded-full"></span>&nbsp;aalam
+        </button>
         </a>
     </div>
     <div class="header__meta w-full flex justify-between content-end">
-        <h3 class="header__title dark:text-primarySecondaryDark">
-            <a href="">{ SITE.name }</a>
+        <h3 class="header__title">
+            <!-- <a href="">{ SITE.name }</a> -->
         </h3>
         <div class="header__meta-more">
-            <!-- <p class="header__desc">
-                { SITE.description }
-            </p> -->
             <nav class="header__nav flex">
                 <ul class="header__ref-list">
-                    <li>
-                        <SearchBtn client:visible />
-                    </li>
-                    <li>
-                        <a href={ SITE.githubUrl } title={`${ SITE.name }'s Github URL'`}>
-                            <SvgIcon>
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                            </SvgIcon>
-                        </a>
-                    </li>
+                    {
+                        NAV_ITEMS.map(navItem => 
+                            <li 
+                                class="nav-item"
+                                class:list={[
+                                    navItem.path === Astro.url.pathname ? 'nav-item--active' : '',
+                                    useBaseColors ? 'nav-item--plain' : 'nav-item--themed'
+                                ]} >
+                                <a href={navItem.path} title={navItem.title}>{navItem.title}</a>
+                            </li>
+                        )
+                    }
                     <!-- <li>
-                        <a href="/rss.xml" title="RSS">
-                            <SvgIcon>
-                                <path d="M4 11a9 9 0 0 1 9 9"></path>
-                                <path d="M4 4a16 16 0 0 1 16 16"></path>
-                                <circle cx="5" cy="19" r="1"></circle>
-                            </SvgIcon>
-                        </a>
+                        <SearchBtn client:visible />
                     </li> -->
-                    <li>
+                    <li class="nav-item">
                         <ModeSwitcherBtn client:visible />
                     </li>
                 </ul>
@@ -54,16 +63,19 @@
     .header {
         @apply flex gap-4 py-3 /* border-gray-200 dark:border-gray-700 - check styles/global.css */
     }
-    .header__logo-img {
-        @apply w-16 h-16 rounded-full overflow-hidden
+    .nav-item {
+        @apply uppercase font-thin py-1 sm:p-4;
     }
-    .header__title {
-        @apply text-4xl font-extrabold md:text-5xl text-dark-primary dark:text-dark-secondary
+    .nav-item--themed {
+        @apply  text-primary dark:text-dark-primary hover:text-gray-800 dark:hover:text-gray-100;
     }
-    .header__desc {
-        @apply text-xl flex-1 dark:text-gray-200
+    .nav-item--plain {
+        @apply text-gray-100 hover:text-dark-secondary;
+    }
+    .nav-item--active {
+        @apply font-bold underline underline-offset-4;
     }
     .header__ref-list {
-        @apply flex gap-3 text-gray-400
+        @apply flex;
     }
 </style>

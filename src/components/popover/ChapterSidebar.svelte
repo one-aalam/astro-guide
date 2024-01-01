@@ -38,13 +38,13 @@
 </MediaQuery>
 <style lang="postcss">
     .sidebar {
-        @apply lg:flex flex-col gap-6 pr-6 py-10;
+        @apply lg:flex flex-col gap-6 pr-6 pb-10 pt-10 lg:pt-0 z-10 left-0;
         @apply text-left top-16 min-h-full self-start;
         @apply fixed lg:sticky;
         @apply w-8/12 sm:w-6/12 md:w-5/12 lg:w-3/12;
         @apply bg-gradient-to-r from-gray-300 to-zinc-100 dark:from-zinc-700  dark:to-gray-800 lg:bg-inherit lg:bg-none;
         @apply shadow-2xl lg:shadow-none;
-        @apply h-screen overflow-y-auto lg:h-auto lg:overflow-visible mt-8 rounded-tr-lg transition-all;
+        @apply h-screen overflow-y-auto lg:h-auto lg:overflow-visible mt-8 lg:mt-0 rounded-tr-lg transition-all;
     }
     .sidebar__panel {
         @apply flex flex-col px-3 py-2;

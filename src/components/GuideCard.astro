@@ -8,8 +8,8 @@ interface Props {
 const { guide } = Astro.props
 ---
 <a href={`/guides/${guide.slug}`} title={guide.data.title}>
-    <div class="guide overflow-hidden text-center">
-        <div class="guide__cover bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 flex items-end overflow-hidden justify-center w-64 h-64 rounded-full absolute -top-36 p-2">
+    <div class="guide">
+        <div class="guide__cover">
             {guide.data.coverImagePath && <img class="block w-20 h-20" src={guide.data.coverImagePath.src} alt={guide.data.coverImagePath} height={100} />}
         </div>
         <h4 class="guide__title mt-24">
@@ -27,11 +27,14 @@ const { guide } = Astro.props
 </a>
 <style>
     .guide {
-        @apply flex flex-col gap-6 px-8 py-10 rounded-md shadow-xl hover:shadow-2xl hover:translate-x-1 hover:-translate-y-1 transition-all relative min-h-60;
+        @apply flex flex-col gap-6 px-8 py-10 rounded-md shadow-xl hover:shadow-2xl hover:translate-x-1 hover:-translate-y-1 transition-all relative overflow-hidden text-center min-h-96;
         @apply bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100;
     }
+    .guide__cover {
+        @apply bg-gradient-to-t from-gray-200 dark:from-gray-800 to-gray-800 dark:to-gray-200 flex items-end overflow-hidden justify-center w-64 h-64 rounded-full absolute -top-36 p-2;
+    }
     .guide__title {
-        @apply text-4xl font-black text-white hover:underline mb-1;
+        @apply text-4xl font-black text-white line-clamp-2 hover:underline mb-1;
     }
     .guide__desc {
         @apply text-base leading-6 line-clamp-2 text-gray-50;
