@@ -12,7 +12,7 @@
 }
 
 .astro-code {
-    @apply font-sans font-bold text-xl;
+    @apply font-mono font-bold text-xl;
 }
 
 @tailwind components;

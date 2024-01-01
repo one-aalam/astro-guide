@@ -1,7 +1,8 @@
 ---
     import { ViewTransitions } from 'astro:transitions';
     import { SITE } from '$/config'
-    import "@fontsource/poppins";
+    import "@fontsource/dm-sans";
+    import "@fontsource/fira-code";
     import '../styles/global.css' // from '../styles/global.css'
 
     export type Props = {
@@ -13,9 +14,9 @@
 
     const { title = SITE.title , description, permalink, image } = Astro.props as Props
 ---
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

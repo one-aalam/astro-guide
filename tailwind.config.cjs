@@ -15,7 +15,8 @@ module.exports = {
     },
     theme: {
 		fontFamily: {
-			sans: ['Fira Code', ...fontFamily.sans],
+			sans: ['DM Sans', ...fontFamily.sans],
+            mono: ['Fira Code', ...fontFamily.mono],
 		},
 		extend: {
             colors: {
