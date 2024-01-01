@@ -35,6 +35,10 @@ module.exports = {
                         'blockquote > p::before, p::after': {
                             color: colors.primary,
                         },
+                        ':not(pre) > code': {
+                            color: theme('colors.gray.50'),
+                            backgroundColor: theme('colors.gray.700'),
+                        },
                         h1: {
                             color: theme('colors.dark.secondary'),
                         },
@@ -49,10 +53,23 @@ module.exports = {
                 DEFAULT: {
                     css: {
                         a: {
-                            color: theme('colors.primarySecondaryDark'),
+                            color: theme('colors.primary'),
                               '&:hover': {
-                                color: theme('colors.primary'),
+                                color: theme('colors.dark.primary'),
                               },
+                        },
+                        ':not(pre) > code': {
+                            color: theme('colors.gray.700'),
+                            backgroundColor: theme('colors.gray.100'),
+                            padding: '0.25rem', /* 4px */
+                            borderRadius: '0.375rem', /* 6px */
+                        },
+                        'code::before': {
+                            content: 'none', // don’t generate the pseudo-element
+                            //                content: '""', // this is an alternative: generate pseudo element using an empty string
+                        },
+                        'code::after': {
+                            content: 'none'
                         },
                         blockquote: {
                             color: theme('colors.primary'),

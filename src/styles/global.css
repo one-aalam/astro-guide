@@ -7,12 +7,16 @@
             header, footer {
                 @apply text-gray-400 border-gray-700;
             }
+            strong {
+                @apply text-inherit
+            }
 		}
 	}
 }
 
+
 .astro-code {
-    @apply font-mono font-bold text-xl;
+    @apply font-mono text-xl shadow-inner dark:shadow-inner;
 }
 
 @tailwind components;
@@ -38,7 +42,7 @@
 
 .dark {
     --astro-code-color-text: #e0def4;
-    --astro-code-color-background: #232136;
+    --astro-code-color-background: #1a1927;
     --astro-code-token-constant: #9ccfd8;
     --astro-code-token-string: #ea9a97;
     --astro-code-token-comment: #9893a5;
