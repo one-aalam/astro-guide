@@ -26,7 +26,9 @@
     {/if}
 </div>
 
-<style lang="postcss">
+<style>
+    @reference "tailwindcss";
+
     .popover {
         @apply relative
     }
