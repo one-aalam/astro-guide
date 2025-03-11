@@ -16,11 +16,11 @@
     "checkJs": true,
     "baseUrl": "/Users/aftalam/Desktop/code/starter-kits/astro/astro-guide",
     "paths": {
-      "$components": [
-        "./src/components"
+      "$components/*": [
+        "./src/components/*"
       ],
-      "$": [
-        "./src"
+      "$/*": [
+        "./src/*"
       ]
     },
     "types": [

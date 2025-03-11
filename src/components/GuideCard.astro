@@ -8,7 +8,7 @@ interface Props {
 const { guide } = Astro.props
 ---
 <a href={`/guides/${guide.slug}`} title={guide.data.title}>
-    <div class="guide">
+    <div class="guide from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary dark:text-dark-base-100">
         <div class="guide__cover">
             <div class="guide__shape">
                 {guide.data.coverImagePath && <img class="guide__fw" src={guide.data.coverImagePath.src} alt={guide.data.coverImagePath} height={100} />}
@@ -28,9 +28,11 @@ const { guide } = Astro.props
     </div>
 </a>
 <style>
+    @reference "tailwindcss";
+
     .guide {
         @apply flex flex-col gap-6 px-8 py-10 rounded-md shadow-xl hover:shadow-2xl hover:translate-x-1 hover:-translate-y-1 transition-all relative overflow-hidden text-center min-h-96;
-        @apply bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100;
+        @apply bg-gradient-to-br  text-white ;
     }
     .guide__cover {
         @apply flex justify-center w-full h-auto absolute -top-36 left-0;
@@ -50,6 +52,6 @@ const { guide } = Astro.props
         @apply text-base leading-6 line-clamp-2 text-gray-50;
     }
     .pill {
-        @apply inline-block text-xs px-2 py-1 rounded-md font-semibold uppercase bg-gray-500 text-white bg-opacity-80 shadow-inner;
+        @apply inline-block text-xs px-2 py-1 rounded-md font-semibold uppercase bg-gray-500/80 text-white shadow-inner;
     }
 </style>

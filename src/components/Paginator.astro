@@ -6,6 +6,8 @@ const { page } = Astro.props
     {page.url.next && <a class="action__go-to-x" href={page.url.next} title="Go to Next">Next &rarr;</a>}
 </div>
 <style>
+    @reference "tailwindcss";
+    
     .page__actions {
         @apply flex justify-center md:justify-end py-6 gap-2
     }

@@ -14,11 +14,11 @@ const { content } = Astro.props
     <MainLayout>
         <div class="post__header">
             <div class="post__tags">
-                { content.tags.length > 0 && content.tags.map(tag => <a class="post__tag" href={`/tags/${tag}`} title={tag}>{tag}</a>) }
+                { content.tags.length > 0 && content.tags.map(tag => <a class="post__tag hover:text-primary dark:hover:text-primaryDark" href={`/tags/${tag}`} title={tag}>{tag}</a>) }
             </div>
-            <h1 class="post__title">{ content.title }</h1>
+            <h1 class="post__title text-primary dark:text-primaryDark">{ content.title }</h1>
             <h5 class="post__desc">
-                <a class="post__author" href={`https://twitter.com/${content.authorTwitter}`} title={`${content.author}'s twitter`} target="_blank" rel="external">{ content.author }</a> |
+                <a class="post__author hover:text-primary" href={`https://twitter.com/${content.authorTwitter}`} title={`${content.author}'s twitter`} target="_blank" rel="external">{ content.author }</a> |
                 <span class="post__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(content.date))}</span>
             </h5>
         </div>
@@ -29,17 +29,19 @@ const { content } = Astro.props
     </MainLayout>
 </html>
 <style>
+    @reference "tailwindcss";
+    
     .post__header {
         @apply py-4 mb-1
     }
     .post__title {
-        @apply text-5xl font-extrabold text-primary dark:text-primaryDark
+        @apply text-5xl font-extrabold 
     }
     .post__desc {
         @apply text-gray-500 dark:text-gray-100
     }
     .post__author {
-        @apply no-underline dark:text-white hover:text-primary
+        @apply no-underline dark:text-white 
     }
     .post__date {
         @apply text-gray-400
@@ -48,6 +50,6 @@ const { content } = Astro.props
         @apply inline-flex gap-2
     }
     .post__tag {
-        @apply text-gray-400 hover:text-primary dark:hover:text-primaryDark
+        @apply text-gray-400 
     }
 </style>

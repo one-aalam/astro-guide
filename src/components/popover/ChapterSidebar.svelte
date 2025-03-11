@@ -18,7 +18,7 @@
         >
             <div class="sidebar__panel">
                 <header class="sidebar__header">
-                    <h3 class="meta sidebar__title" id="sidebar-title">
+                    <h3 class="meta sidebar__title text-dark-primary" id="sidebar-title">
                         <slot name="title"/>
                     </h3>
                     <button
@@ -36,7 +36,9 @@
         </aside>
     {/if}
 </MediaQuery>
-<style lang="postcss">
+<style>
+    @reference "tailwindcss";
+
     .sidebar {
         @apply lg:flex flex-col gap-6 pr-6 pb-10 pt-10 lg:pt-0 z-10 left-0;
         @apply text-left top-16 min-h-full self-start;
@@ -50,7 +52,7 @@
         @apply flex flex-col px-3 py-2;
     }
     .meta {
-        @apply text-sm font-semibold uppercase text-dark-primary;
+        @apply text-sm font-semibold uppercase;
     }
     .sidebar__header {
         @apply flex lg:hidden z-[2] uppercase truncate;

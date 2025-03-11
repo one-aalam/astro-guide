@@ -57,6 +57,8 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
 </body>
 
 <style>
+    @reference "tailwindcss";
+
     .content {
         min-height: 580px
     }
@@ -64,7 +66,7 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
     .main {
         @apply w-full lg:w-9/12 md:px-8 lg:px-0;
     }
-    .meta {
-        @apply text-sm font-semibold uppercase text-dark-primary;
-    }
+    /* .meta {
+        @apply text-sm font-semibold uppercase ;
+    } */
 </style>

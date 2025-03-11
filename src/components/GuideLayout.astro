@@ -25,13 +25,13 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
             <!-- <Nav/> -->
             <div class="flex justify-between content-end py-48 ">
                 <div class="post-preview w-3/5 text-left">
-                    <h4 class="post-preview__title">
+                    <h4 class="post-preview__title dark:text-dark-primary">
                         {guide.data.title}
                     </h4>
                     <p class="post-preview__desc" set:html={guide.data.heroDescription}></p>
-                    <div>
+                    {chapters && chapters.length > 0 && <div>
                         <a class="inline-block cursor-pointer bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary px-8 py-4 rounded-full font-bold shadow-primary shadow-xl border border-primary dark:border-dark-primary hover:shadow-2xl" href={`/guides/${chapters[0].guide.slug}/chapter/${chapters[0].guide.chapterSlug}`} title="Get Started">Get Started</a>
-                    </div>
+                    </div>}
                     <!-- Guide Extras -->
                     <p class="text-sm">Requires basic understanding of <Fragment set:html={niceToKnow}>{niceToKnow}</Fragment>. See the <a href="#overview" title="Learn More">ToC</a> or, <a href="#overview" title="Learn More">learn more</a> about what you'll build below.</p>
 
@@ -51,7 +51,7 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
                         <p>{guide.data.overview}</p>
                     </div>
                     <br/>
-                    <div class="toc">
+                    {chapters && chapters.length > 0 && <div class="toc">
                         <div class="meta mb-4">
                             table of contents
                         </div>
@@ -62,7 +62,7 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
                                     )
                                 }
                         </ul>
-                    </div>
+                    </div>}
                 </div>
                 <!-- Overview: Right -->
                 <div class="col-right w-3/6">
@@ -72,11 +72,11 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
                     <br/>
                     <div class="flex justify-between content-end gap-8">
                         <div class="w-1/2">
-                            <div class="meta mb-4">
+                            <div class="meta mb-4 text-dark-primary">
                                 author
                             </div>
                             <ul class="author__list flex flex-col gap-6">
-                                { guide.data.authors.map(author => <li class="author flex justify-between">
+                                { guide?.data?.authors.map(author => <li class="author flex justify-between">
                                     <div class="w-16 flex items-center justify-center">
                                         <img class="rounded-full w-12 h-12" src={author.avatar} />
                                     </div>
@@ -116,23 +116,25 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
 </body>
 
 <style>
+    @reference "tailwindcss";
+
     .content {
         min-height: 580px
     }
     .pill {
-        @apply inline-block w-auto px-2 py-1 rounded-md shadow-md text-sm font-semibold uppercase bg-gray-800 text-white bg-opacity-80;
+        @apply inline-block w-auto px-2 py-1 rounded-md shadow-md text-sm font-semibold uppercase bg-gray-800/80 text-white;
     }
 
     .post-preview {
         @apply  flex flex-col gap-6 text-white px-8 py-10;
     }
     .post-preview__title {
-        @apply text-4xl font-black text-white dark:text-dark-primary hover:underline mb-1;
+        @apply text-4xl font-black text-white hover:underline mb-1;
     }
     .post-preview__desc {
         @apply text-base leading-6 text-gray-50;
     }
     .meta {
-        @apply text-sm font-semibold uppercase text-dark-primary;
+        @apply text-sm font-semibold uppercase;
     }
 </style>

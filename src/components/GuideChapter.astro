@@ -11,7 +11,7 @@ const { chapter, number } = Astro.props;
 <li class="list-none">
     <a href={`/guides/${chapter.guide.slug}/chapter/${chapter.guide.chapterSlug}`} title={chapter.data.title}>
 
-        <div class="chapter">
+        <div class="chapter border-dark-primary dark:border-primary">
             <div class="chapter__top">
                 <div class="chapter__num">{ number }</div>
                 <h4 class="chapter__title">{chapter.data.title}</h4>
@@ -24,8 +24,10 @@ const { chapter, number } = Astro.props;
     </a>
 </li>
 <style>
+    @reference "tailwindcss";
+
     .chapter {
-        @apply p-2 border border-dark-primary dark:border-primary border-opacity-20 rounded-md shadow-sm flex flex-col justify-between transition-all hover:translate-x-0.5 hover:-translate-y-0.5 cursor-pointer;
+        @apply p-2 border rounded-md shadow-sm flex flex-col justify-between transition-all hover:translate-x-0.5 hover:-translate-y-0.5 cursor-pointer;
     }
     .chapter__top {
         @apply flex;

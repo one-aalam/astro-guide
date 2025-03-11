@@ -41,7 +41,7 @@
                                 class="nav-item"
                                 class:list={[
                                     navItem.path === Astro.url.pathname ? 'nav-item--active' : '',
-                                    useBaseColors ? 'nav-item--plain' : 'nav-item--themed'
+                                    useBaseColors ? 'nav-item--plain hover:text-dark-secondary' : 'nav-item--themed text-primary dark:text-dark-primary'
                                 ]} >
                                 <a href={navItem.path} title={navItem.title}>{navItem.title}</a>
                             </li>
@@ -60,6 +60,8 @@
 </header>
 
 <style>
+    @reference "tailwindcss";
+    
     .header {
         @apply flex gap-4 py-3 /* border-gray-200 dark:border-gray-700 - check styles/global.css */
     }
@@ -67,10 +69,10 @@
         @apply uppercase font-thin py-1 sm:p-4;
     }
     .nav-item--themed {
-        @apply  text-primary dark:text-dark-primary hover:text-gray-800 dark:hover:text-gray-100;
+        @apply  hover:text-gray-800 dark:hover:text-gray-100;
     }
     .nav-item--plain {
-        @apply text-gray-100 hover:text-dark-secondary;
+        @apply text-gray-100;
     }
     .nav-item--active {
         @apply font-bold underline underline-offset-4;

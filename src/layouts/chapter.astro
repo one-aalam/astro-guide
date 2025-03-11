@@ -33,37 +33,39 @@ const { chapter, chapters, guide, headings } = Astro.props
             </div> -->
             <div class="flex-1">
                 <h1 class="chapter__title">{ chapter.data.title }</h1>
-                <h5 class="chapter__desc"> { chapter.data.description } </h5>
+                <h5 class="chapter__desc text-accent dark:text-dark-accent"> { chapter.data.description } </h5>
             </div>
         </div>
         <Prose>
             <slot />
         </Prose>
         <br/>
-        <!-- <a class="chapter__author" href={`https://twitter.com/${chapter.data.authors[0].name}`} title={`${chapter.data.authors[0].name}'s twitter`} target="_blank" rel="external">{ chapter.data.authors[0].name }</a> | -->
+        <!-- <a class="chapter__author hover:text-primary" href={`https://twitter.com/${chapter.data.authors[0].name}`} title={`${chapter.data.authors[0].name}'s twitter`} target="_blank" rel="external">{ chapter.data.authors[0].name }</a> | -->
         <span class="chapter__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(chapter.data.publishedAt))}</span>
     </ChapterLayout>
 </html>
 <style>
+    @reference "tailwindcss";
+
     .chapter__header {
         @apply py-4 mb-1
     }
     .chapter__title {
-        @apply text-3xl font-extrabold text-dark-neutral dark:text-neutral pt-2
+        @apply text-3xl font-extrabold /*text-dark-neutral dark:text-neutral*/ pt-2
     }
-    .chapter__desc {
+    /* .chapter__desc {
         @apply text-accent dark:text-dark-accent
-    }
+    } */
     .chapter__author {
-        @apply no-underline dark:text-white hover:text-primary
+        @apply no-underline dark:text-white 
     }
     .chapter__date {
         @apply text-gray-400
     }
-    .chapter__tags {
+    /* .chapter__tags {
         @apply inline-flex gap-2
     }
     .chapter__tag {
         @apply text-gray-400 hover:text-primary dark:hover:text-dark-primary
-    }
+    } */
 </style>

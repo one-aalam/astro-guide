@@ -1,6 +1,11 @@
-@tailwind base;
+@import 'tailwindcss';
+@config '../../tailwind.config.cjs';
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* https://github.com/tailwindlabs/tailwindcss/discussions/2917 */
 @layer base {
+
 	body {
 		&.dark {
 			@apply text-gray-200;
@@ -16,11 +21,8 @@
 
 
 .astro-code {
-    @apply font-mono text-xl shadow-inner dark:shadow-inner;
+    @apply border border-gray-200 dark:border-gray-700 font-mono font-medium shadow-inner bg-primary/5!;
 }
-
-@tailwind components;
-@tailwind utilities;
 /*
     https://rosepinetheme.com/palette
     Rosé Pine Dawn

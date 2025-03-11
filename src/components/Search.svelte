@@ -49,9 +49,9 @@
         }
     }
 </script>
-<div class="search">
+<div class="search bg-primary ">
     <div class="search__ctrl">
-        <label for="search"><SearchIcon found={searchResults.length > 0} /></label>
+        <label class="text-primary" for="search"><SearchIcon found={searchResults.length > 0} /></label>
         <input type="text" name="search" bind:this={searchInput} placeholder="What are you looking for?" bind:value={searchQuery} />
     </div>
     <div class="search__results">
@@ -60,7 +60,7 @@
                 <PostSearchPreview post={post} isLast={ i === searchResults.length - 1 } />
             {/each}
         {:else}
-            <div class="search__results--none">
+            <div class="search__results--none text-dark-primary">
                 {#if searchQuery.length}
                     No matching items found!
                 {:else}
@@ -72,8 +72,10 @@
     <div class="note"><small>click anywhere outside to close</small></div>
 </div>
 <style>
+    @reference "tailwindcss";
+
     .search {
-        @apply w-full relative bg-primary  p-8  rounded-md shadow-lg;
+        @apply w-full relative  p-8  rounded-md shadow-lg;
     }
     input {
         @apply w-full px-4 py-2 pl-10 text-xl font-semibold text-gray-600 border-0 shadow-inner rounded-md bg-gray-100 placeholder-purple-500;
@@ -82,13 +84,13 @@
         @apply pb-4 relative;
     }
     .search__ctrl label {
-        @apply text-primary absolute top-2 left-2;
+        @apply absolute top-2 left-2;
     }
     .search__results {
         @apply w-96 h-64 py-4 overflow-y-auto;
     }
     .search__results--none {
-        @apply  text-center text-dark-primary;
+        @apply  text-center;
     }
     .note {
         @apply w-full text-center text-white;
