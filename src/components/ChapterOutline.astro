@@ -18,7 +18,7 @@ type Heading = {
 
 const { chapters, selectedChapter, headings = [], supressHeadings = true } = Astro.props
 const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.seriesOrdinal);
-const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => selectedChapter.slug.split('/').pop() === currentChapter.slug.split('/').pop()
+const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => selectedChapter.id.split('/').pop() === currentChapter.id.split('/').pop()
 ---
 <div class="chapter__outline w-full">
     <Timeline class='fixed'>

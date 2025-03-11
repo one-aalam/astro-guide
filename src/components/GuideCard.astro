@@ -7,7 +7,7 @@ interface Props {
 }
 const { guide } = Astro.props
 ---
-<a href={`/guides/${guide.slug}`} title={guide.data.title}>
+<a href={`/guides/${guide.id}`} title={guide.data.title}>
     <div class="guide from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary dark:text-dark-base-100">
         <div class="guide__cover">
             <div class="guide__shape">
@@ -22,7 +22,7 @@ const { guide } = Astro.props
         </p>
         <span class="guide__meta">
             <div class="pill">
-                {guide.data.chapters} chapters // beginner-friendly
+                {guide.data.chapters.length ? guide.data.chapters.length : 'N/A'} chapters // beginner-friendly
             </div>
         </span>
     </div>

@@ -5,7 +5,7 @@ import Footer from './Footer.astro';
 import Nav from './Nav.astro';
 import Portal from './Portal.astro';
 import SearchModal from './SearchModal.svelte'
-import type { CollectionEntry } from 'astro:content';
+import { getEntries, type CollectionEntry } from 'astro:content';
 import GuideChapter from './GuideChapter.astro';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 }
 
 const { guide, chapters } = Astro.props
+const authors = await getEntries(guide.data.authors);
 
 const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</strong>`).join(', ')
 ---
@@ -76,13 +77,13 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
                                 author
                             </div>
                             <ul class="author__list flex flex-col gap-6">
-                                { guide?.data?.authors.map(author => <li class="author flex justify-between">
+                                { authors.map(author => <li class="author flex justify-between">
                                     <div class="w-16 flex items-center justify-center">
-                                        <img class="rounded-full w-12 h-12" src={author.avatar} />
+                                        <img class="rounded-full w-12 h-12" src={author.data.avatarUrl} />
                                     </div>
                                     <div class="author__detail flex-1">
-                                        <h4 class="chapter__title font-semibold text-base text-gray-800">{author.name}</h4>
-                                        <p class="chapter__desc text-sm">{author.detail}</p>
+                                        <h4 class="chapter__title font-semibold text-base text-gray-800">{author.data.name}</h4>
+                                        <p class="chapter__desc text-sm">{author.data.detail}</p>
                                     </div>
                                 </li>)}
                             </ul>
