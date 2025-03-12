@@ -1,11 +1,6 @@
 import { file, glob } from "astro/loaders";
 import { z, defineCollection, reference } from "astro:content";
 
-const guideContributor = z.object({
-    name: z.string(),
-    detail: z.string(),
-    avatar: z.string().url()
-})
 
 const authorCollection = defineCollection({
     loader: file("src/data/authors.json"),
@@ -19,51 +14,71 @@ const authorCollection = defineCollection({
     })
 })
 
+
+const commonFields = {
+    title: z.string().max(100, 'The title length must be less than or equal to 100 chars'),
+    description: z.string(),
+
+    publishedAt: z.date(),
+    updatedAt: z.date().optional(),
+    draft: z.boolean().optional(),
+
+    tags: z.array(z.string()),
+    category: z.string(),
+    authors: z.array(reference('author')).optional(),
+    // Meta fields
+    seoTitle: z.string().max(60).optional(),
+    seoDescription: z.string().max(160).optional(),
+    canonicalUrl: z.string().url().optional(),
+    featuredOrder: z.number().optional(), // for prioritizing on homepage
+}
+
+
+
+
 const guideCollection = defineCollection({
     loader: glob({ pattern: '*/index.{mdx,md}', base: './src/content/guides'}),
     schema: ({ image }) => z.object({
-        title: z.string().max(100, 'The title length must be less than or equal to 100 chars'),
-        description: z.string(),
+        ...commonFields,
         heroDescription: z.string(),
         overview: z.string(),
-        category: z.string().optional(),
-        tags: z.array(z.string()),
-        order: z.number(),
-        themeColor: z.string(),
-        codeGithubUrl: z.string().url().optional(),
-        toc: z.array(z.string()).optional(),
+        chapters: z.array(reference('chapter')),
+        // startAt: reference('chapter').optional(),
+        themeColor: z.string().optional(),
         coverImagePath: image().optional(),
         thumbImagePath: image().optional(),
-        contributorCount: z.string().optional(),
-        authors: z.array(reference('author')),
         twitterShareText: z.string().optional(),
-        date: z.date(),
-        startAt: reference('chapter').optional(),
-        chapters: z.array(reference('chapter')),
+        codeGithubUrl: z.string().url().optional(),
         needs: z.array(z.string()).optional(),
+        difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+        order: z.number(),
+        featuredOrder: z.number().optional(), // for prioritizing on homepage
     })
 })
 
 const chapterCollection = defineCollection({
-    loader: glob({ pattern: '**/chapters/**/*.{mdx,md}', base: './src/content/guides'}),
+    loader: glob({ pattern: '*/chapters/**/*.{mdx,md}', base: './src/content/guides'}),
     schema: ({ image }) => z.object({
-        title: z.string().max(100, 'The title length must be less than or equal to 100 chars'),
+        ...commonFields,
+        parentGuide: reference('guide'),
+        chapterNumber: z.number(),
+        coverImagePath: image().optional(),
         tocTitle: z.string().max(50, 'The tocTitle length must be less than or equal to 50 chars'),
-        description: z.string(),
-        tags: z.array(z.string()),
-        // image: '/static/images/astro-get-up-and-running/banner.png'
-        seriesKey: z.string().optional(),
-        seriesOrdinal: z.number().optional(),
-        published: z.boolean(),
-        publishedAt: z.date(),
-        updatedAt: z.date().optional(),
-        commit: z.string().optional(),
-        authors: z.array(guideContributor).optional(),
+        category: z.string().optional(), // <- override
     })
 })
+
+const articleCollection = defineCollection({
+    loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/articles'}),
+    schema: ({ image }) => z.object({
+        ...commonFields,
+        coverImagePath: image().optional(),
+    })
+});
 
 export const collections = {
     'guide': guideCollection,
     'chapter': chapterCollection,
-    'author': authorCollection
+    'author': authorCollection, 
+    'article': articleCollection
 }

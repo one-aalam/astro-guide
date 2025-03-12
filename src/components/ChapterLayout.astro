@@ -25,7 +25,7 @@ type Heading = {
 
 const { chapters, guide, chapter, headings } = Astro.props
 const isActiveChapter = (currentChapter: CollectionEntry<'chapter'>) => chapter.slug.split('/').pop() === currentChapter.slug.split('/').pop()
-const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.seriesOrdinal);
+const sortedChapters = chapters.sort((a, b) => a.data.chapterNumber - b.data.chapterNumber);
 ---
 <body class="font-sans antialiased min-h-screen bg-base-100 dark:bg-dark-base-100 text-dark-base-100 dark:text-base-100">
     <div class="transition-colors">
@@ -37,14 +37,14 @@ const sortedChapters = chapters.sort((a, b) => a.data.seriesOrdinal - b.data.ser
             <section class="flex justify-between content-end" id="sticky-banner-target">
                 <!-- Sidebar -->
                 <ChapterSidebar client:load>
-                      <!-- <span slot="title">table of content</span>
-                      <Icon slot="trigger" name="x-circle" class="w-6 h-6" /> -->
+                      <span slot="title">table of content</span>
+                      <!-- <Icon slot="trigger" name="x-circle" class="w-6 h-6" />  -->
                       <ChapterOutline chapters={chapters} selectedChapter={chapter} headings={headings} />
                 </SidebarWrapper>
                 <!-- Main -->
                 <main class="main">
                     <slot/>
-                    <ChapterCongrats chapter={chapter} nextChapter={sortedChapters[chapter.data.seriesOrdinal]}/>
+                    { sortedChapters.length && chapter.chapterNumber !== sortedChapters.length && <ChapterCongrats chapter={chapter} nextChapter={sortedChapters[chapter.data.chapterNumber]} client:visible />}
                 </main>
             </section>
             <br class="my-4"/>
