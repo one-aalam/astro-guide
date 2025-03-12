@@ -56,6 +56,9 @@ importers:
       astro-auto-import:
         specifier: ^0.4.4
         version: 0.4.4(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
+      astro-d2:
+        specifier: ^0.7.0
+        version: 0.7.0(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
       astro-expressive-code:
         specifier: ^0.40.2
         version: 0.40.2(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
@@ -1108,6 +1111,12 @@ packages:
     engines: {node: '>=16.0.0'}
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta || ^5.0.0-beta
+
+  astro-d2@0.7.0:
+    resolution: {integrity: sha512-g+lD6xZQcCT2T35zqC9cJKWJJZGhjQUmCWEHrUTXfaQYnpt7ubHjoYHAdYPweftigFrq2S5T2jdTT/BkManqTg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      astro: '>=5.0.0'
 
   astro-expressive-code@0.40.2:
     resolution: {integrity: sha512-yJMQId0yXSAbW9I6yqvJ3FcjKzJ8zRL7elbJbllkv1ZJPlsI0NI83Pxn1YL1IapEM347EvOOkSW2GL+2+NO61w==}
@@ -4133,6 +4142,13 @@ snapshots:
       '@types/node': 18.19.80
       acorn: 8.14.1
       astro: 5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)
+
+  astro-d2@0.7.0(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)):
+    dependencies:
+      astro: 5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)
+      hast-util-from-html: 2.0.3
+      hast-util-to-html: 9.0.5
+      unist-util-visit: 5.0.0
 
   astro-expressive-code@0.40.2(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)):
     dependencies:

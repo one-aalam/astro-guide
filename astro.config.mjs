@@ -19,6 +19,8 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 import { pluginColorChips } from 'expressive-code-color-chips';
 
+import d2 from 'astro-d2';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ilm.aalam.in/',
@@ -38,51 +40,57 @@ export default defineConfig({
     './src/components/mdx/InfoAlert.astro',
     './src/components/mdx/BadgeBox.astro',
   ],
-}),
-expressiveCode({
-  themes: ['rose-pine-dawn', 'rose-pine-moon'],
-  useDarkModeMediaQuery: true,
-  themeCssRoot: ':root',
-  themeCssSelector: (theme) => {
-    let themeSelector;
+}), expressiveCode({
+    themes: ['rose-pine-dawn', 'rose-pine-moon'],
+    useDarkModeMediaQuery: true,
+    themeCssRoot: ':root',
+    themeCssSelector: (theme) => {
+      let themeSelector;
 
-    switch (theme.type) {
-      case 'light':
-        themeSelector = '[class=""]';
-        break;
-      case 'dark':
-        themeSelector = '[class="dark"]';
-        break;
-      default:
-        themeSelector = '[class=""]';
-        break;
-    }
+      switch (theme.type) {
+        case 'light':
+          themeSelector = '[class=""]';
+          break;
+        case 'dark':
+          themeSelector = '[class="dark"]';
+          break;
+        default:
+          themeSelector = '[class=""]';
+          break;
+      }
 
-    return themeSelector;
-  },
-  styleOverrides: {
-    codeFontSize: 'var(--expressive-code-font-size)',
-    codeLineHeight: '1.4',
-    frames: {
-      frameBoxShadowCssValue: 'none',
+      return themeSelector;
     },
-    uiFontSize: "0.9rem",
-  },
-  defaultProps: {
-    frame: 'code',
-    showLineNumbers: true,
-    overridesByLang: {
-      'bash,shell,md,markdown': {
-        showLineNumbers: false,
+    styleOverrides: {
+      codeFontSize: 'var(--expressive-code-font-size)',
+      codeLineHeight: '1.4',
+      frames: {
+        frameBoxShadowCssValue: 'none',
+      },
+      uiFontSize: "0.9rem",
+    },
+    defaultProps: {
+      frame: 'code',
+      showLineNumbers: true,
+      overridesByLang: {
+        'bash,shell,md,markdown': {
+          showLineNumbers: false,
+        },
       },
     },
-  },
-  plugins: [
-    // pluginLineNumbers(),
-    pluginCollapsibleSections(),
-    pluginColorChips()
-  ],
-}), mdx(), sitemap(), react(), svelte(), icon()],
+    plugins: [
+      // pluginLineNumbers(),
+      pluginCollapsibleSections(),
+      pluginColorChips()
+    ],
+  }), mdx(), sitemap(), react(), svelte(), icon(), d2({
+    layout: 'dagre',
+    sketch: true,
+    theme: {
+      default: '103',
+      dark: '200'
+    }
+  })],
   vite: {
     plugins: [tailwindcss()],
     resolve: {
