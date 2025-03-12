@@ -73,6 +73,7 @@ const articleCollection = defineCollection({
     schema: ({ image }) => z.object({
         ...commonFields,
         coverImagePath: image().optional(),
+        difficulty: z.enum(['quick_tip', 'in_depth', 'walkthrough', 'primer', 'concept']).optional(),
     })
 });
 

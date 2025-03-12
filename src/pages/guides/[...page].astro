@@ -18,8 +18,11 @@ type Props = {
 
 export async function getStaticPaths({ paginate, rss }) {
   const allGuides: CollectionEntry<'guide'>[] = await getCollection('guide');
-  const sortedGuides = allGuides.sort((guideCurrent, guideNext) => {
-    return guideNext.data.date.valueOf() - guideCurrent.data.date.valueOf();
+  const allArticles: CollectionEntry<'article'>[] = await getCollection('article');
+  
+  const allContent = [ ...allGuides, ...allArticles ]
+  const sortedGuides = allContent.sort((guideCurrent, guideNext) => {
+    return guideNext.data.publishedAt.valueOf() - guideCurrent.data.publishedAt.valueOf();
   })
   return paginate(sortedGuides, {
       pageSize: PAGE_SIZE

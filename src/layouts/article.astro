@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { SITE } from '$/config'
+import ArticleLayout from '$/components/ArticleLayout.astro'
+import BaseHead from '$/components/BaseHead.astro'
+import Prose from '$/components/Prose.astro'
+
+type Props = {
+    article: CollectionEntry<'article'>,
+    headings?: Heading[] 
+}
+
+type Heading = {
+    depth: number
+    slug: string
+    text: string
+}
+
+const { article, headings } = Astro.props
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={ article.data.title ? `${ SITE.title } | ${article.data.title}` : SITE.title } description={ article.data.description }/>
+    </head>
+    <ArticleLayout article={article} headings={headings}>
+        <div class="chapter__header mt-6 flex">
+            <div class="flex-1">
+                <h1 class="chapter__title">{ article.data.title }</h1>
+                <h5 class="chapter__desc text-accent dark:text-dark-accent"> { article.data.description } </h5>
+            </div>
+        </div>
+        <Prose>
+            <slot />
+        </Prose>
+        <br/>
+        <span class="chapter__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(article.data.publishedAt))}</span>
+    </ArticleLayout>
+</html>
+<style>
+    @reference "tailwindcss";
+
+    .chapter__header {
+        @apply py-4 mb-1
+    }
+    .chapter__title {
+        @apply text-3xl font-extrabold /*text-dark-neutral dark:text-neutral*/ pt-2
+    }
+    /* .chapter__desc {
+        @apply text-accent dark:text-dark-accent
+    } */
+    .chapter__author {
+        @apply no-underline dark:text-white 
+    }
+    .chapter__date {
+        @apply text-gray-400
+    }
+    /* .chapter__tags {
+        @apply inline-flex gap-2
+    }
+    .chapter__tag {
+        @apply text-gray-400 hover:text-primary dark:hover:text-dark-primary
+    } */
+</style>

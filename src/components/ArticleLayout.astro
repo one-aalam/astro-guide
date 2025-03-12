@@ -1,0 +1,67 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Portal from './Portal.astro';
+import SearchModal from './SearchModal.svelte'
+import TableOfContents from './TableOfContents.svelte'
+
+interface Props {
+    article: CollectionEntry<'article'>,
+    headings?: Heading[]
+}
+
+type Heading = {
+    depth: number
+    slug: string
+    text: string
+}
+
+const { article, headings } = Astro.props
+---
+<body class="font-sans antialiased min-h-screen bg-base-100 dark:bg-dark-base-100 text-dark-base-100 dark:text-base-100">
+    <div class="transition-colors">
+        <div class="mx-auto max-w-7xl px-4 md:px-0">
+            <br class="my-4"/>
+            <Header/>
+            <!-- Chapter Bar -->
+            <section class="flex justify-between content-end" id="sticky-banner-target">
+                <!-- Main -->
+                <main class="main">
+                    <slot/>
+                </main>
+                <aside class="pt-16">
+                    <!-- <div class="hidden lg:block">
+                        <div class="sticky top-8"> -->
+                          <!-- Table of contents -->
+                          {headings && headings.length > 0 && (
+                            <TableOfContents headings={headings} client:load />
+                          )}
+                        <!-- </div>
+                      </div> -->
+                </aside>
+            </section>
+            <br class="my-4"/>
+            <Footer/>
+        </div>
+    </div>
+    <Portal>
+        <SearchModal client:load/>
+    </Portal>
+</body>
+
+<style>
+    @reference "tailwindcss";
+
+    .content {
+        min-height: 580px
+    }
+
+    .main {
+        @apply w-full lg:w-9/12 md:px-8 lg:px-0;
+    }
+    /* .meta {
+        @apply text-sm font-semibold uppercase ;
+    } */
+</style>
