@@ -4,8 +4,6 @@ import ArticleLayout from '$/layouts/article.astro'
 export const prerender = true;
 export async function getStaticPaths() {
   const articles = await getCollection('article');
-
-  console.log(articles)
   
   const paths = articles.map(article => ({
     params: { id: article.id },

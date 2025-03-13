@@ -1,12 +1,14 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import Header from './Header.astro';
-import Footer from './Footer.astro';
+import Header from './core/Header.svelte';
+import Footer from './core/Footer.astro';
 import Nav from './Nav.astro';
 import Portal from './Portal.astro';
 import SearchModal from './SearchModal.svelte'
 import { getEntries, type CollectionEntry } from 'astro:content';
 import GuideChapter from './GuideChapter.astro';
+import TechPills from './TechPills.svelte'
+import ChapterList from './ChapterList.astro'
 
 interface Props {
     guide: CollectionEntry<'guide'>
@@ -22,9 +24,9 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
     <div class="bg-gradient-to-br from-primary to-dark-secondary dark:from-dark-secondary dark:to-primary text-white dark:text-dark-base-100  transition-colors min-h-screen">
         <main class="mx-auto max-w-7xl px-4 md:px-0">
             <br class="my-4"/>
-            <Header useBaseColors={true}/>
+            <Header client:load useBaseColors={true}/>
             <!-- <Nav/> -->
-            <div class="flex justify-between content-end py-48 ">
+            <div class="flex justify-between content-end py-48">
                 <div class="post-preview w-3/5 text-left">
                     <h4 class="post-preview__title dark:text-dark-primary">
                         {guide.data.title}
@@ -47,22 +49,16 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
             <div class="content flex justify-between content-end pt-12 px-8 gap-8">
                 <!-- Overview: Left -->
                 <div class="col-left w-3/6">
-                    <div >
-                        <h3 class="font-semibold text-2xl mb-4">Overview</h3>
-                        <p>{guide.data.overview}</p>
+                    <div>
+                        <h3 class="font-semibold text-2xl mb-4 text-secondary dark:text-dark-secondary">Overview</h3>
+                        <p class="text-gray-900 dark:text-white">{guide.data.overview}</p>
                     </div>
                     <br/>
-                    {sortedChapters && sortedChapters.length > 0 && <div class="toc">
-                        <div class="meta mb-4">
+                    {sortedChapters && sortedChapters.length > 0 && <div class="chapters">
+                        <div class="meta mb-4 text-secondary dark:text-dark-secondary">
                             table of contents
                         </div>
-                        <ul class="chapters list-none flex flex-col gap-3">
-                                {
-                                    sortedChapters.map(
-                                        (chapter, index) => <GuideChapter chapter={chapter} number={index + 1} />
-                                    )
-                                }
-                        </ul>
+                        <ChapterList chapters={sortedChapters}/>
                     </div>}
                 </div>
                 <!-- Overview: Right -->
@@ -71,42 +67,38 @@ const niceToKnow = (guide?.data?.needs || []).map(tech => `<strong>${tech}</stro
                         <slot/>
                     </div>
                     <br/>
-                    <div class="flex justify-between content-end gap-8">
-                        <div class="w-1/2">
-                            <div class="meta mb-4 text-dark-primary">
-                                author
+                    
+                    <!-- Technology pills grid -->
+                    <TechPills/>
+
+                    <!-- Demo container placeholder -->
+                    <div class="relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 h-16 mb-8 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+                        <img src="/assets/demo-placeholder.png" alt="Demo illustration" class="h-8 w-8" />
+                    </div>
+
+                    <!-- Author info -->
+                    <div class="border-t dark:border-gray-800 pt-6">
+                        <h3 class="text-sm font-bold tracking-wide text-gray-500 dark:text-gray-400 uppercase mb-3">
+                            Author
+                        </h3>
+                        
+                        { authors && authors.length > 0 && authors.map(author => <div class="flex items-center">
+                            <div class="relative">
+                                <img 
+                                src={author.data.avatarUrl} 
+                                alt="Author" 
+                                class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-800"
+                                />
+                                <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
                             </div>
-                            <ul class="author__list flex flex-col gap-6">
-                                { authors && authors.length > 0 && authors.map(author => <li class="author flex justify-between">
-                                    <div class="w-16 flex items-center justify-center">
-                                        <img class="rounded-full w-12 h-12" src={author.data.avatarUrl} />
-                                    </div>
-                                    <div class="author__detail flex-1">
-                                        <h4 class="chapter__title font-semibold text-base text-gray-800">{author.data.name}</h4>
-                                        <p class="chapter__desc text-sm">{author.data.detail}</p>
-                                    </div>
-                                </li>)}
-                            </ul>
-                        </div>
-                        <!-- <div class="w-1/2 none">
-                            <div class="meta mb-4">
-                                contributors
+                            
+                            <div class="ml-4">
+                                <h4 class="font-medium text-gray-900 dark:text-white">{author.data.name}</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{author.data.detail}</p>
                             </div>
-                            <ul class="author__list flex flex-col gap-2">
-                                { guide.data.contributors.map(contributor => <li class="author flex justify-between">
-                                    <div class="w-16 flex items-center justify-center">
-                                        <img class="rounded-full w-12 h-12" src={contributor.avatar} />
-                                    </div>
-                                    <div class="author__detail flex-1">
-                                        <h4 class="chapter__title font-semibold text-base text-gray-800">{contributor.name}</h4>
-                                        <p class="chapter__desc text-sm">{contributor.detail}</p>
-                                    </div>
-                                </li>)}
-                            </ul>
-                        </div> -->
+                        </div>)}
                     </div>
                 </div>
-                <!-- <slot /> -->
             </div>
             <br class="my-4"/>
             <Footer/>

@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content'
+export type Props = {
+    related: Array<CollectionEntry<'article'>>,
+    chapters: Array<CollectionEntry<'chapter'>>,
+    activeChapter: CollectionEntry<'chapter'>,
+    guide: CollectionEntry<'guide'>
+}
+
+const { related = [], chapters = [], activeChapter, guide } = Astro.props as Props
+---
+<div class="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Related Articles -->
+    {related.length > 0 && (
+        <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <h3 class="font-medium text-gray-900 dark:text-white mb-3">Related Articles</h3>
+            <ul class="space-y-2">
+                {related.map(article => <li>
+                    <a 
+                    href={`/articles/${article.id}`}
+                    class="flex items-center text-primary-600 dark:text-primary-400 hover:underline"
+                    >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span>{article.title}</span>
+                    </a>
+                </li>
+                )}
+            </ul>
+        </div>
+    )}
+    
+    <!-- Series Navigation -->
+    { chapters.length > 0 && <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+      <h3 class="font-medium text-gray-900 dark:text-white mb-3">Guide: {guide.data.title}</h3>
+      <div class="flex flex-col space-y-2">
+        { chapters.map((chapter, index) =>(
+            <a href={`/articles/${chapter.id}`} class="flex items-center text-primary-600 dark:text-primary-400">
+                {index > 0 && (
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                )}
+                { chapter.id === activeChapter.id && (
+                    <svg class="w-4 h-4 mr-2 text-primary-500 dark:text-primary-400" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                )}
+                {index === chapters.length - 1 && (
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                )}
+                <span>{index + 1}. {chapter.data.title} {chapter.id === activeChapter.id && '(Current)'}</span>
+            </a>
+        ))}
+      </div>
+    </div>}
+  </div>

@@ -121,7 +121,7 @@
         --sidebar-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         
         @apply flex flex-col gap-6 pr-6 pb-10 pt-10 lg:pt-0 z-10 left-0;
-        @apply text-left top-16 min-h-full self-start;
+        @apply text-left top-48 min-h-full self-start;
         @apply bg-gradient-to-r from-gray-300 to-zinc-100 lg:bg-inherit lg:bg-none;
         @apply h-screen overflow-y-auto lg:h-auto lg:overflow-visible mt-8 lg:mt-0 rounded-tr-lg transition-all;
         @apply z-10;
@@ -134,7 +134,7 @@
     /* Sticky sidebar (desktop) */
     .sidebar--sticky {
         @apply pt-6 pr-4 pb-8 pl-0 sticky top-8 border-0 border-r-2 border-dotted border-gray-200 shadow-none;
-        @apply top-16;
+        @apply top-48;
         width: var(--sidebar-width-desktop);
         max-height: calc(100vh - 4rem);
     }

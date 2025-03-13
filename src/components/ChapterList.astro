@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+type Props = {
+    chapters: CollectionEntry<'chapter'>[],
+}
+
+const { chapters } = Astro.props
+---
+<div class="space-y-3">
+    {chapters.map((chapter, i) => (
+        <a 
+          href={`#${chapter.id}`}
+          class="chapter-card group relative flex items-start p-4 rounded-lg border  border-dark-primary/40 dark:border-primary/40 transition-all duration-300 hover:border-primary-300 dark:hover:border-primary-500 hover:shadow-md"
+        >
+          <div class="chapter-number flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full text-5xl font-bold bg-primary-50 dark:bg-primary-900/30 text-gray-400 dark:text-gray-600 mr-4 transition-all duration-300 group-hover:scale-110">
+            {i + 1}
+          </div>
+          
+          <div class="flex-1">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              {chapter.data.title}
+            </h4>
+            
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200">
+              {chapter.data.description}
+            </p>
+          </div>
+          
+          <div class="absolute top-1/2 right-4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+        </a>
+    ))}
+</div>

@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 
-import Header from './Header.astro';
-import Footer from './Footer.astro';
+import Header from './core/Header.svelte';
+import Footer from './core/Footer.astro';
 import Portal from './Portal.astro';
 import SearchModal from './SearchModal.svelte'
 import ChapterOutline from './ChapterOutline.astro';
@@ -29,15 +29,15 @@ const sortedChapters = chapters.sort((a, b) => a.data.chapterNumber - b.data.cha
 ---
 <body class="font-sans antialiased min-h-screen bg-base-100 dark:bg-dark-base-100 text-dark-base-100 dark:text-base-100">
     <div class="transition-colors">
-        <div class="mx-auto max-w-7xl px-4 md:px-0">
-            <br class="my-4"/>
-            <Header/>
+        <div class="mx-auto max-w-7xl px-4 md:px-0 mt-24">
+            <Header client:load/>
+
             <!-- Chapter Bar -->
             <ChapterBar chapter={chapter} totalChapters={chapters.length} guideTitle={guide.data.title}/>
             <section class="flex justify-between content-end" id="sticky-banner-target">
                 <!-- Sidebar -->
                 <ChapterSidebar client:load>
-                      <span slot="title">table of content</span>
+                      <span slot="title">chapters</span>
                       <!-- <Icon slot="trigger" name="x-circle" class="w-6 h-6" />  -->
                       <ChapterOutline chapters={chapters} selectedChapter={chapter} headings={headings} />
                 </SidebarWrapper>

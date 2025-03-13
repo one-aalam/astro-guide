@@ -14,7 +14,7 @@ type Props = {
 
 const { chapter, totalChapters, guideTitle } = Astro.props;
 ---
-<div class="chapter-bar sticky-banner js-sticky-banner flex gap-2 w-full px-2 py-2 sticky rounded-full shadow-lg bg-gray-100 dark:bg-gray-600 bg-opacity-90 dark:bg-opacity-90 z-20" data-target-in="#sticky-banner-target">
+<div class="chapter-bar sticky-banner js-sticky-banner top-20 md:top-24 flex gap-2 w-full px-2 py-2 sticky rounded-full shadow-lg bg-gray-100 dark:bg-gray-600 bg-opacity-90 dark:bg-opacity-90 z-20" data-target-in="#sticky-banner-target">
     <div class="ctrl flex gap-4">
         <RadialProgress percent={chapter.data.chapterNumber / totalChapters * 100} colorCircle={true} size={48} stroke={10} />
         <SidebarSwitcher client:load>
@@ -33,11 +33,11 @@ const { chapter, totalChapters, guideTitle } = Astro.props;
 <style>
 .sticky-banner {
   /* position: fixed; */
-  top: 10px;
+  /* top: 100px; */
   left: 0;
   width: 100%;
   @apply z-10;
-  /* transform: translateY(-100%); */
+  transform: translateY(-100%);
   transition: transform 0.3s;
   
 }

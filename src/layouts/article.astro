@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import { getEntries } from 'astro:content'
 import { SITE } from '$/config'
 import ArticleLayout from '$/components/ArticleLayout.astro'
 import BaseHead from '$/components/BaseHead.astro'
 import Prose from '$/components/Prose.astro'
+import ArticleHeader from '$/components/ArticleHeader.svelte'
 
 type Props = {
     article: CollectionEntry<'article'>,
@@ -17,6 +19,7 @@ type Heading = {
 }
 
 const { article, headings } = Astro.props
+const authors = await getEntries(article.data.authors)
 ---
 <!doctype html>
 <html lang="en">
@@ -24,21 +27,42 @@ const { article, headings } = Astro.props
         <BaseHead title={ article.data.title ? `${ SITE.title } | ${article.data.title}` : SITE.title } description={ article.data.description }/>
     </head>
     <ArticleLayout article={article} headings={headings}>
-        <div class="chapter__header mt-6 flex">
-            <div class="flex-1">
-                <h1 class="chapter__title">{ article.data.title }</h1>
-                <h5 class="chapter__desc text-accent dark:text-dark-accent"> { article.data.description } </h5>
-            </div>
-        </div>
+        <!-- Reading progress bar -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800 z-50">
+    <div 
+      class="h-full bg-primary-500 dark:bg-primary-400 transition-all duration-150 ease-out"
+      style="width: 20%"
+    ></div>
+  </div>
+
+        <ArticleHeader 
+            title={article.data.title}
+            subtitle={article.data.description}
+            estimatedReadTime={"12 min read"}
+            publishDate={article.data.publishedAt}
+            authorName={authors[0].data.name}
+            authorRole={authors[0].data.detail}
+            client:visible
+        />
         <Prose>
             <slot />
         </Prose>
         <br/>
-        <span class="chapter__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(article.data.publishedAt))}</span>
     </ArticleLayout>
 </html>
 <style>
     @reference "tailwindcss";
+
+    :global(.content-container img) {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  :global(.content-container img:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
 
     .chapter__header {
         @apply py-4 mb-1
