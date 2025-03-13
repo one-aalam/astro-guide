@@ -44,7 +44,7 @@ const sortedChapters = chapters.sort((a, b) => a.data.chapterNumber - b.data.cha
                 <!-- Main -->
                 <main class="main">
                     <slot/>
-                    { sortedChapters.length && chapter.chapterNumber !== sortedChapters.length && <ChapterCongrats chapter={chapter} nextChapter={sortedChapters[chapter.data.chapterNumber]} client:visible />}
+                    <!-- { sortedChapters.length && chapter.chapterNumber !== sortedChapters.length && <ChapterCongrats chapter={chapter} nextChapter={sortedChapters[chapter.data.chapterNumber]} client:visible />} -->
                 </main>
             </section>
             <br class="my-4"/>

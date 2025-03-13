@@ -64,11 +64,11 @@ const { chapter, nextChapter } = Astro.props
                You've Completed!
             </h1>
             <p class="text-gray-500 mb-4 leading-snug">
-               Chapter {chapter.data.seriesOrdinal}: <strong>{chapter.data.title}</strong>
+               Chapter {chapter.data.chapterNumber}: <strong>{chapter.data.title}</strong>
             </p>
 
             <div class="bg-white rounded-md px-4 py-2">
-                Continue to Chapter {nextChapter.data.seriesOrdinal}:
+                Continue to Chapter {nextChapter.data.chapterNumber}:
                 
                 <a
                     class=" text-primary" href={nextChapter.guide.chapterSlug} title={nextChapter.data.title}>{nextChapter.data.title} →</a>
