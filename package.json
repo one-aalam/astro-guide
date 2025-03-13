@@ -17,6 +17,7 @@
     "astro": "^5.4.2",
     "astro-d2": "^0.7.0",
     "globby": "^14.1.0",
+    "gray-matter": "^4.0.3",
     "typescript": "^5.8.2"
   },
   "dependencies": {
@@ -53,6 +54,7 @@
     "remark-autolink-headings": "^8.0.0",
     "remark-code-titles": "^0.1.2",
     "remark-slug": "^8.0.0",
+    "sharp": "^0.33.5",
     "svelte": "^5.22.6",
     "tailwindcss": "^4.0.12"
   }
