@@ -56,9 +56,6 @@ importers:
       astro-auto-import:
         specifier: ^0.4.4
         version: 0.4.4(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
-      astro-d2:
-        specifier: ^0.7.0
-        version: 0.7.0(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
       astro-expressive-code:
         specifier: ^0.40.2
         version: 0.40.2(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
@@ -132,6 +129,9 @@ importers:
       astro:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)
+      astro-d2:
+        specifier: ^0.7.0
+        version: 0.7.0(astro@5.4.2(@types/node@20.17.24)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
       globby:
         specifier: ^14.1.0
         version: 14.1.0
